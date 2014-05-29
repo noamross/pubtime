@@ -1,0 +1,1 @@
+# This script generates the data for analysis, found in the ../data folder
