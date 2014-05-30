@@ -7,8 +7,9 @@ get_esa_abtract_urls = function(journal, vol, issue) {
   URL = paste0("http://www.esajournals.org/toc/", journal, "/", vol, "/", issue)
   toc_page =getURL(URL, cookiejar=tempfile(), followlocation=TRUE)
   ab_urls = stri_match_all_regex(toc_page,
-                          '(/doi/abs/10\\.[0-9]{4,}/[[:alnum:]]\\.-]+)">Abstract</a>'
+                          '(/doi/abs/10\\.[0-9]{4,}/[[:alnum:]\\.-]+)">Abstract</a>'
                           )[[1]][,2]
+  if (is.na(ab_urls)) return(NA)
   ab_urls = paste0("http://www.esajournals.org", ab_urls)
   return(ab_urls)
 }

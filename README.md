@@ -13,7 +13,6 @@ I'm currently keeping this as a private repo for several reasons:
 3.  It may be worthwhile to give some of the journal editors a sneak peak before
     making some of this work public.
 
----
 
 ## Development notes
 
