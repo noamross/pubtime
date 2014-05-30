@@ -1,0 +1,8 @@
+Package: journaltimes
+Title: Data and code for a project to analyze publication times for ecology journals
+Version: 0.1
+Authors: "Noam Roos <noam.ross@gmail.com> [aut, cre]"
+Description: Data and code for a project to analyze publication times for ecology journals
+Depends: R (>= 3.0.2)
+License: What license is it under?
+LazyData: true
