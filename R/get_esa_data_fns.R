@@ -21,10 +21,15 @@ get_esa_article_data = function(url) {
   out = list(doi = str_match(ab_page, '<meta name="dc.Identifier" scheme="doi" content="(10\\.[0-9]{4,}/[0-9\\.-]+)" />')[,2],
              vol = str_match(ab_page, 'Volume ([0-9]{1,2}),')[,2],
              issue = str_match(ab_page, 'Issue ([0-9]{1,2})')[,2],
-             publishdate = str_match(ab_page, '<meta name="dc.Date" scheme="WTN8601" content="([0-9-]+)" />')[,2],
-             editor = str_match(ab_page, 'Editor: (.*)\\.</p>')[,2])  #consider using md5::md5(raw("editor")) to anonymize
+             issuedate = str_match(ab_page, 'Issue [0-9]{1,2} \\(([[:alpha:]]+ [[:digit:]]{4})\\)')[,2],
+             onlinedate = str_match(ab_page, '<meta name="dc.Date" scheme="WTN8601" content="([0-9-]+)" />')[,2],
+             editor = str_match(ab_page, 'Editor: (.*)\\.</p>')[,2])  #consider using md5::md5(raw("editor")) to anonymize  
   dates = str_match_all(ab_page, '(Received|Revised|Accepted|Final version received): ([[:alnum:][:space:],]+)[;<]')
-  datefields = as.list(dates[[1]][,3])
-  names(datefields) = dates[[1]][,2]
+  if (is.null(str(dates)[[1]])) {
+    datefields=list()
+  } else {
+    datefields = as.list(dates[[1]][,3])
+    names(datefields) = dates[[1]][,2]
+  }
   return(c(out, datefields))
 }
