@@ -12,10 +12,12 @@ with the following fields:
 -   Editor (may not be available)
 -   Date fields (YYYY/MM/DD, these may vary, and may have repeats)
     -   Received
-    -   Revised
+    -   Revised (Likely repeat, do Revised2 etc. as needed)
     -   Accepted
-    -   Published Online First
+    -   Final version received
+    -   Published Online (may be prior to published date for older articles)
     -   Published
+    -   Date of print issue
 
 For one journal, or for one set of journals hosted at the same publisher,
 write a script called `inst/journalname_get.R`. Put functions in
