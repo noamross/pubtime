@@ -3,8 +3,12 @@ Contributions welcome! Here are some ways to help with the project:
 # Get some data
 
 We want data from more journals! You can write code to scrape the data we need
-for additional journals.  The result of your code should be a data frame/CSV
-with the following fields:
+for additional journals.
+
+It's really helpful to split this work up because journal servers may have
+rate-limiting that slows down the collection of data.
+
+The result of your code should be a data frame/CSV with the following fields:
 
 -   DOI
 -   Volume
@@ -18,6 +22,7 @@ with the following fields:
     -   Published Online (may be prior to published date for older articles)
     -   Published
     -   Date of print issue
+    
 
 For one journal, or for one set of journals hosted at the same publisher,
 write a script called `inst/journalname_get.R`. Put functions in
@@ -29,6 +34,11 @@ Here are some journals to get data from (add to this list):
 
 -   PeerJ
 -   PLoS One (ecology topic only)
+
+# Check some data
+
+The data need to be spot-checked.  Pick one of the data set and go through it
+to look for scraping errors.  Modify the scraping script to adjust them.
 
 # Crunch some numbers
 

@@ -5,7 +5,7 @@ issues = 12:1
 vols = 95:95
 
 jdata = list()
-
+i = 1
 for(journal in journals) {
   for(vol in vols) {
     for(issue in issues) {
@@ -14,10 +14,14 @@ for(journal in journals) {
         for(ab_url in ab_urls) {
           message(paste("Retrieving", journal, "Vol.", vol, "No.", issue,
                         "Article", which(ab_url==ab_urls), "of", length(ab_urls)))
-          adata = c(list(journal=journal, get_esa_article_data(ab_url))
-          jdata = c(jdata, adata)
+          adata = c(list(journal=journal), get_esa_article_data(ab_url))
+          jdata[[i]] = adata
+          i = i+1;
           Sys.sleep(25)
         }
     }
   }
 }
+
+require(plyr)
+jddata = ldply(jdata, function(x) as.data.frame(x))
