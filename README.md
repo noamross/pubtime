@@ -1,5 +1,23 @@
 # A project to examine journal acceptance times
 
+This is an in-development project to examine the time-to acceptance of various
+journals in ecology, and possibly identify journals faking submission times.
+The theory is that the latter will have a set of oddly short review times that
+are likely to fail to line up with the dates encoded in DOI schemes.
+
+This is organized as an R package, but it's not really useful in that format
+yet, though evenentually the aim will be for it to be a data package for easy
+reproducibility.  I'm not sure if it will install properly as a private repo,
+anyway.  For now I recommend just cloning the repository.
+
+For now, data go into `data/`, functions to scrape data from various journal
+sites are in `R/`, scripts for scraping are in `inst/` as R files, and data
+analyses should go in `inst/` as `.Rmd` files. 
+
+See `CONTRIBUTING.md` for how you can help.
+
+## Cautions
+
 I'm currently keeping this as a private repo for several reasons:
 
 1.  I'm not totally secure about legal/copywright issues regarding scraping
@@ -18,9 +36,10 @@ I'm currently keeping this as a private repo for several reasons:
 
 -   I've started this by scraping publisher webpages, but it's possible that
     this [CrossRef textmining API](http://tdmsupport.crossref.org/researchers/)
-    will be more generally applicable and robust
+    will be more generally applicable and robust.
     
 ## License
 
 Code in this package is licensed CC-0, while the text of analyses (.Rmd files
-found in the `inst` directory), are licensed CC-BY.
+found in the `inst` directory), are licensed CC-BY.  Text of licences are in
+the `LICENSE` file.
