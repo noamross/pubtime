@@ -50,8 +50,11 @@ to look for scraping errors.  Modify the scraping scripts to adjust them.
 
 If you want to do an analyis, do it as narrative code and put it in
 `inst/YYYY-MM-DD-some-analyses.Rmd`.  Be sure to put your name in the YAML
-metadata.  These are probably exploratory blog-post length analyses.  Once we
-have several we can collate them into a manuscript
+metadata.  Include the knitted `.md` file as well so that we can view the
+results on github.  
+
+These are probably exploratory blog-post length analyses.  Once we
+have several we can collate them into a manuscript.
 
 # Website
 
