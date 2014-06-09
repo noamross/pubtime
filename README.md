@@ -24,6 +24,11 @@ I'm currently keeping this as a private repo for several reasons:
     data from the journal websites. I suspect ESA won't be a problem, and PeerJ
     and PLoS will be fine, but I'd like to grab additional data from others.
     
+    According to [this guide](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/315014/copyright-guidance-research.pdf), recent changes
+    to UK copyright law explicitly allow this type of text mining to any
+    material you otherwise have legal acces to read.  Situation in the U.S.
+    remains more murky.
+    
 2.  I'd like to do some analyses looking at effects at the editor level where
     possible, but we may ultimately want to anonymize the editor data, and I
     want to figure out how exactly to pursue this.
