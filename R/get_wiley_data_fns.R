@@ -9,6 +9,7 @@
 #' @export
 #' @import httr stringi plyr XML
 get_wiley_article_data = function(page) {
+  page = GET(paste0("http://dx.doi.org/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="citation_doi"]', xmlGetAttr, "content")[[1]],
              journal = xpathApply(ab_XML, '//meta[@name="citation_journal_title"]', xmlGetAttr, "content")[[1]],
@@ -31,6 +32,7 @@ get_wiley_article_data = function(page) {
 }
 
 get_bioone_pub_history = function(page) {
+  page = GET(paste0("http://dx.doi.org/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Volume\\s+(\\d{1,3})[^\\w]")[2]),
@@ -45,12 +47,26 @@ get_bioone_pub_history = function(page) {
 #' @import rplos XML
 get_plos_pub_history = function(doi) {
   ft_XML = xmlParse(plos_fulltext(doi), useInternalNodes=T, asText=TRUE)
-  ft_XML = xmlParse("~/Dropbox/Workspace/journal.pone.0086169.xml", useInternalNodes=T)
   out = list(
-      receiveddate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="received"]/*', xmlValue), collapse="-"), "%d-%m-%Y")
-      acceptdate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="accepted"]/*', xmlValue), collapse="-"), "%d-%m-%Y")
-      editor = 
+      volume = as.integer(xpathApply(ft_XML, '//article-meta//volume', xmlValue)),
+      issue = as.integer(xpathApply(ft_XML, '//article-meta//issue', xmlValue)),
+      receiveddate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="received"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      acceptdate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="accepted"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      onlinedate = as.Date(paste0(xpathApply(ft_XML, '//article-meta//pub-date[@pub-type="epub"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      editor = paste(rev(unlist(xpathApply(ft_XML, '//contrib[@contrib-type="editor"]/name/*', xmlValue))), collapse=" ")
+  )
 }
+
+get_peerj_pub_history = function(doi) {
+  ft_XML = GET(gsub("/$", ".xml", HEAD(paste0("http://dx.doi.org/", doi))$url))
+  ft_XML = xmlParse(content(ft_XML, "text"), useInternalNodes=T, asText = TRUE)
+  out = list(
+      volume = as.integer(xpathApply(ft_XML, '//article-meta//volume', xmlValue)),
+      receiveddate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="received"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      acceptdate = as.Date(paste0(xpathApply(ft_XML, '//history/date[@date-type="accepted"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      onlinedate = as.Date(paste0(xpathApply(ft_XML, '//article-meta//pub-date[@pub-type="epub"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
+      editor = paste(rev(unlist(xpathApply(ft_XML, '//contrib[@contrib-type="editor"]/name/*', xmlValue))), collapse=" ")
+  )
 
 get_pub_history = function(doi, oa_only=TRUE) {
   citation = cr_citation("10.1371/journal.pone.0086169")
@@ -58,9 +74,9 @@ get_pub_history = function(doi, oa_only=TRUE) {
   domain = stri_match_first_regex(page$url, "(http|https)://([^\\/]+)[\\/$]")[3]
   pubhistory = switch(citation$journal,
         `PLoS ONE` = get_plos_pub_history(doi),
-        onlinelibrary.wiley.com = get_wiley_pub_history(page),
-        www.esajournals.org = get_esa_pub_history(page),
-        www.bioone.org = get_bioone_pub_history(page))
+        `Ecology Letters` = get_wiley_pub_history(doi),
+        `Ecology` = get_esa_pub_history(doi),
+        `The Condor` = get_bioone_pub_history(doi)
   return(pubhistory)
 }
     
