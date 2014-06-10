@@ -17,7 +17,7 @@ get_esa_abtract_urls = function(journal, vol, issue) {
 #' Get some (limited) data on an ESA journal article
 #' @export
 #' @import RCurl stringi
-get_esa_article_data = function(url) {
+get_esa_pub_history = function(url) {
   ab_page = getURL(url, cookiejar=tempfile(), followlocation=TRUE)
   out = list(doi = stri_match_first_regex(ab_page, '<meta name="dc.Identifier" scheme="doi" content="(10\\.[0-9]{4,}/[0-9\\.-]+)" />')[,2],
              vol = stri_match_first_regex(ab_page, 'Volume ([0-9]{1,2}),')[,2],
