@@ -8,7 +8,7 @@
 #' Get the data from an article DOI
 #' @export
 #' @import httr stringi plyr XML
-get_wiley_article_data = function(page) {
+get_wiley_article_data = function(doi) {
   page = GET(paste0("http://dx.doi.org/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="citation_doi"]', xmlGetAttr, "content")[[1]],
@@ -31,7 +31,7 @@ get_wiley_article_data = function(page) {
   return(c(out, pubdates))
 }
 
-get_bioone_pub_history = function(page) {
+get_bioone_pub_history = function(doi) {
   page = GET(paste0("http://dx.doi.org/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
@@ -55,6 +55,7 @@ get_plos_pub_history = function(doi) {
       onlinedate = as.Date(paste0(xpathApply(ft_XML, '//article-meta//pub-date[@pub-type="epub"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
       editor = paste(rev(unlist(xpathApply(ft_XML, '//contrib[@contrib-type="editor"]/name/*', xmlValue))), collapse=" ")
   )
+  return(out)
 }
 
 get_peerj_pub_history = function(doi) {
@@ -67,18 +68,59 @@ get_peerj_pub_history = function(doi) {
       onlinedate = as.Date(paste0(xpathApply(ft_XML, '//article-meta//pub-date[@pub-type="epub"]/*', xmlValue), collapse="-"), "%d-%m-%Y"),
       editor = paste(rev(unlist(xpathApply(ft_XML, '//contrib[@contrib-type="editor"]/name/*', xmlValue))), collapse=" ")
   )
+}
 
+get_jstor_pub_history = function(doi) {
+  page = GET(paste0("http://dx.doi.org/", doi))
+  ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
+  out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
+             volume = as.integer(stri_match_first_regex(content(page, "text"), "Vol.\\s+(\\d{1,3})[^\\w]")[2]),
+             issue = as.integer(stri_match_first_regex(content(page, "text"), "No.\\s+(\\d{1,3})[^\\w]")[2]),
+             issuedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]], "%B %d, %Y")
+            )
+  datestring = xpathApply(ab_XML, '//p[@class="articleBody_submissionDate"]/span[@class="string-date"]', xmlValue)[[1]]
+  datevals = stri_match_all_regex(datestring, "([[:upper:]][[:lower:]\\s]+)\\s+([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[[1]]
+  dates = as.list(as.Date(datevals[,3], "%B %d, %Y"))
+  names(dates) = datevals[,2]
+  return(c(out,dates))
+}
+  
 get_pub_history = function(doi, oa_only=TRUE) {
-  citation = cr_citation("10.1371/journal.pone.0086169")
+  citation = cr_citation("doi")
   page = GET(paste0("http://dx.doi.org/", doi))
   domain = stri_match_first_regex(page$url, "(http|https)://([^\\/]+)[\\/$]")[3]
   pubhistory = switch(citation$journal,
         `PLoS ONE` = get_plos_pub_history(doi),
         `Ecology Letters` = get_wiley_pub_history(doi),
         `Ecology` = get_esa_pub_history(doi),
-        `The Condor` = get_bioone_pub_history(doi)
+        `The Condor` = get_bioone_pub_history(doi),
+        `The American Naturalist` = get_jstor_pub_history(doi)
+  )
+  pubhistory = standardize_datenames(pubhistory)
   return(pubhistory)
 }
-    
 
+#' Convert the names of 
+standardize_datenames(pubhistory) {
+  names(pubhistory) = tolower(names(pubhistory))
+  datenames = list(
+    submitted = c("received", "submitted"),
+    revised = c("revised"),
+    decision = c(),
+    accepted = c("accepted"),
+    online = c("electronically published", "published online", "onlinedate"),
+    final = c("final version received"),
+    issue = c("issue published", "issuedate")
+    editor = c("editor")
+  )
+  for(i in 1:length(datenames) {
+    matches = datenames[[i]] %in% names(pubhistory)
+    if(!any(matches)) {
+      pubhistory[[names(datenames)[i]]] = NA
+    } else {
+      names(pubhistory)[matches] = names(datenames)[i]
+    }
+  }
+  pubhistory = pubhistory[c("doi", "journal", "vol", "issue", "editor", "submitted",
+                            "revised", "decision", "accepted", "online", "issue")]
 }
