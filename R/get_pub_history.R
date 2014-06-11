@@ -28,7 +28,7 @@ get_ecollet_pub_history = function(doi) {
 get_condor_pub_history = function(doi) {
   page = GET(paste0("http://www.bioone.org/doi/abs/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
-  out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
+  out = list(doi = doi,
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Volume\\s+(\\d{1,3})[^\\w]")[2]),
              issue = as.integer(stri_match_first_regex(content(page, "text"), "Issue\\s+(\\d{1,3})[^\\w]")[2]),
              onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),  
@@ -70,7 +70,7 @@ get_peerj_pub_history = function(doi) {
 get_amnat_pub_history = function(doi) {
   page = GET(paste0("http://www.jstor.org/stable/info/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
-  out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
+  out = list(doi = doi, 
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Vol.\\s+(\\d{1,3})[^\\w]")[2]),
              issue = as.integer(stri_match_first_regex(content(page, "text"), "No.\\s+(\\d{1,3})[^\\w]")[2]),
              issuedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]], "%B %d, %Y")
@@ -130,9 +130,14 @@ get_ecosph_pub_history = function(doi) {
 }
 
 #' @export
-#' @import rcrossref
+#' @import rcrossref XML
 get_pub_history = function(doi, oa_only=TRUE) {
-  citation = cr_citation(doi)
+  citation_xml = cr_cn(doi, "crossref-xml")
+  citation=list()
+  citation$doi = doi
+  citation$journal = xpathSApply(citation_xml, "//full_title", xmlValue)
+  citation$volume = xpathSApply(citation_xml, "//journal_volume/volume", xmlValue) 
+  citation$issue = xpathSApply(citation_xml, "//journal_article/publication_date/month", xmlValue) 
   closed = c("The American Naturalist")
   if(citation$journal %in% closed & oa_only) return(closed_journal(citation))
   pubhistory = switch(citation$journal,
@@ -160,7 +165,7 @@ unsupported_pub_history = function(citation) {
 
 closed_journal = function(citation) {
   warning(paste(citation$journal), "requires a subscription to access this data. Returning NA values for dates.")
-  return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$month))
+  return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$issue))
 }
   
 standardize_datenames = function(pubhistory) {
