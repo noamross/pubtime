@@ -32,3 +32,4 @@ END = Sys.time
 require(plyr)
 jddata = ldply(jdata, function(x) as.data.frame(x))
 saveRDS(jddata, "data/ecology_data.rds")
+saveRDS(jdata, "data/ecology_data_list.rds")
