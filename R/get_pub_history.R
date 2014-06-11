@@ -144,7 +144,7 @@ standardize_datenames = function(pubhistory) {
     accepted = c("accepted", "acceptdate"),
     online = c("electronically published", "published online", "onlinedate", "article first published online", "online"),
     finalversion = c("final version received", "finalversion"),
-    issueonline = c("issue published online", "issueonline",),
+    issueonline = c("issue published online", "issueonline"),
     issuedate = c("issue published", "issuedate", "issuedate"),
     editor = c("editor")
   )
