@@ -1,19 +1,12 @@
-# Get data from Wiley Journals, esp. Ecology letters
+#  Get publication date from journals
 
-#' Get the DOIs of a journal for a date range
-#' @export
-#' @import RCurl stringi
-#giet_all_wiley_dois(journal, date_range) 
-
-#' Get the data from an article DOI
-#' @export
 #' @import httr stringi plyr XML
-get_wiley_article_data = function(doi) {
-  page = GET(paste0("http://dx.doi.org/", doi))
+get_ecollet_pub_history = function(doi) {
+  page = GET(paste0("http://onlinelibrary.wiley.com/doi/", doi, "/abstract"))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="citation_doi"]', xmlGetAttr, "content")[[1]],
              journal = xpathApply(ab_XML, '//meta[@name="citation_journal_title"]', xmlGetAttr, "content")[[1]],
-             vol = as.integer(xpathApply(ab_XML, '//meta[@name="citation_volume"]', xmlGetAttr, "content")[[1]]),
+             volume = as.integer(xpathApply(ab_XML, '//meta[@name="citation_volume"]', xmlGetAttr, "content")[[1]]),
              issue = as.integer(xpathApply(ab_XML, '//meta[@name="citation_issue"]', xmlGetAttr, "content")[[1]]),
              issuedate = as.Date(xpathApply(ab_XML, '//meta[@name="citation_publication_date"]', xmlGetAttr, "content")[[1]]),
              onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="citation_online_date"]', xmlGetAttr, "content")[[1]])
@@ -31,15 +24,17 @@ get_wiley_article_data = function(doi) {
   return(c(out, pubdates))
 }
 
-get_bioone_pub_history = function(doi) {
-  page = GET(paste0("http://dx.doi.org/", doi))
+#' @import httr stringi plyr XML
+get_condor_pub_history = function(doi) {
+  page = GET(paste0("http://www.bioone.org/doi/abs/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Volume\\s+(\\d{1,3})[^\\w]")[2]),
              issue = as.integer(stri_match_first_regex(content(page, "text"), "Issue\\s+(\\d{1,3})[^\\w]")[2]),
              onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),  
              recieveddate = as.Date(stri_match_first_regex(content(page, "text"), "Received:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y"),
-             acceptdate = as.Date(stri_match_first_regex(content(page, "text"), "Accepted:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y")
+             acceptdate = as.Date(stri_match_first_regex(content(page, "text"), "Accepted:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y"),
+             issuedate = as.Date(paste("1", stri_match_first_regex(content(page, "text"), "[[:upper:]][[:lower:]]{2} \\d{4}")), "%d %b %Y")
   )
   return(out)
 }
@@ -58,8 +53,9 @@ get_plos_pub_history = function(doi) {
   return(out)
 }
 
+#' @import httr stringi plyr XML
 get_peerj_pub_history = function(doi) {
-  ft_XML = GET(gsub("/$", ".xml", HEAD(paste0("http://dx.doi.org/", doi))$url))
+  ft_XML = GET(paste0("https://peerj.com/articles/", stri_match_first_regex(doi, "(?<=peerj\\.)\\d+$"), ".xml"))
   ft_XML = xmlParse(content(ft_XML, "text"), useInternalNodes=T, asText = TRUE)
   out = list(
       volume = as.integer(xpathApply(ft_XML, '//article-meta//volume', xmlValue)),
@@ -70,8 +66,9 @@ get_peerj_pub_history = function(doi) {
   )
 }
 
-get_jstor_pub_history = function(doi) {
-  page = GET(paste0("http://dx.doi.org/", doi))
+#' @import httr stringi plyr XML
+get_amnat_pub_history = function(doi) {
+  page = GET(paste0("http://www.jstor.org/stable/info/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="dc.Identifier" and @scheme="doi"]', xmlGetAttr, "content")[[1]],  
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Vol.\\s+(\\d{1,3})[^\\w]")[2]),
@@ -79,48 +76,84 @@ get_jstor_pub_history = function(doi) {
              issuedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]], "%B %d, %Y")
             )
   datestring = xpathApply(ab_XML, '//p[@class="articleBody_submissionDate"]/span[@class="string-date"]', xmlValue)[[1]]
-  datevals = stri_match_all_regex(datestring, "([[:upper:]][[:lower:]\\s]+)\\s+([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[[1]]
-  dates = as.list(as.Date(datevals[,3], "%B %d, %Y"))
-  names(dates) = datevals[,2]
-  return(c(out,dates))
+  if(!is.null(datestring)) {
+    datevals = stri_match_all_regex(datestring, "([[:upper:]][[:lower:]\\s]+)\\s+([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[[1]]
+    dates = as.list(as.Date(datevals[,3], "%B %d, %Y"))
+    names(dates) = datevals[,2]
+    return(c(out,dates))
+  } else {
+    return(out)
+  }
 }
-  
+
+
+#' @import httr stringi plyr XML
+get_esa_pub_history = function(doi) {
+  page = content(GET(paste0("http://www.esajournals.org/doi/abs/", doi)), "text")
+  ab_XML = htmlTreeParse(page, useInternalNodes=T, asText=TRUE)
+  out = list(doi = doi,
+             volume = as.integer(stri_match_first_regex(page, 'Volume ([0-9]{1,2}),')[,2]),
+             issue = as.integer(stri_match_first_regex(page, 'Issue ([0-9]{1,2})')[,2]),
+             issuedate = as.Date(paste("01", stri_match_first_regex(page, 'Issue [0-9]{1,2} \\(([[:alpha:]]+ [[:digit:]]{4})\\)')[,2]), "%d %B %Y"),
+             onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),
+             editor = stri_match_first_regex(page, 'Editor: (.*)\\.</p>')[,2]
+  )
+  dates = stri_match_all_regex(page, '(Received|Revised|Accepted|Final version received|<b>Received</b>|revised|accepted|final version received|<b>published</b>): ([[:alnum:][:space:],]+)[;<\\.]')
+  if (all(is.na(dates[[1]]))) {
+    return(out)
+  } else {
+    datefields = as.list(as.Date(dates[[1]][,3], "%B %d, %Y"))
+    names(datefields) = dates[[1]][,2]
+  }
+  return(c(out, datefields))
+}
+
+#' @export
+#' @import rcrossref
 get_pub_history = function(doi, oa_only=TRUE) {
-  citation = cr_citation("doi")
-  page = GET(paste0("http://dx.doi.org/", doi))
-  domain = stri_match_first_regex(page$url, "(http|https)://([^\\/]+)[\\/$]")[3]
+  citation = cr_citation(doi)
   pubhistory = switch(citation$journal,
         `PLoS ONE` = get_plos_pub_history(doi),
-        `Ecology Letters` = get_wiley_pub_history(doi),
+        `Ecology Letters` = get_ecollet_pub_history(doi),
         `Ecology` = get_esa_pub_history(doi),
-        `The Condor` = get_bioone_pub_history(doi),
-        `The American Naturalist` = get_jstor_pub_history(doi)
+        `The Condor` = get_condor_pub_history(doi),
+        `The American Naturalist` = get_amnat_pub_history(doi),
+        `PeerJ` = get_peerj_pub_history(doi),
+         unsupported_pub_history(citation)
   )
+  pubhistory$journal = citation$journal
+  pubhistory$volume = citation$volume
   pubhistory = standardize_datenames(pubhistory)
   return(pubhistory)
 }
 
-#' Convert the names of 
-standardize_datenames(pubhistory) {
+unsupported_pub_history = function(citation) {
+  warning(paste(citation$journal), "is not yet supported. Returning NA values for dates.")
+  return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$month))
+}
+  
+standardize_datenames = function(pubhistory) {
   names(pubhistory) = tolower(names(pubhistory))
   datenames = list(
-    submitted = c("received", "submitted"),
+    submitted = c("received", "submitted", "recieveddate"),
     revised = c("revised"),
-    decision = c(),
-    accepted = c("accepted"),
-    online = c("electronically published", "published online", "onlinedate"),
-    final = c("final version received"),
-    issue = c("issue published", "issuedate")
+    decision = c("first decision", "decision"),
+    accepted = c("accepted", "acceptdate"),
+    online = c("electronically published", "published online", "onlinedate", "article first published online", "online"),
+    finalversion = c("final version received", "finalversion"),
+    issueonline = c("issue published online", "issueonline",),
+    issuedate = c("issue published", "issuedate", "issuedate"),
     editor = c("editor")
   )
-  for(i in 1:length(datenames) {
-    matches = datenames[[i]] %in% names(pubhistory)
+  for(i in 1:length(datenames)) {
+    matches = names(pubhistory) %in% datenames[[i]]
     if(!any(matches)) {
       pubhistory[[names(datenames)[i]]] = NA
     } else {
       names(pubhistory)[matches] = names(datenames)[i]
     }
   }
-  pubhistory = pubhistory[c("doi", "journal", "vol", "issue", "editor", "submitted",
-                            "revised", "decision", "accepted", "online", "issue")]
+  pubhistory = pubhistory[c("doi", "journal", "volume", "issue", "editor", "submitted",
+                            "revised", "decision", "accepted", "online", "finalversion",
+                            "issueonline", "issuedate")]
 }

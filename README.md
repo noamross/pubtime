@@ -47,6 +47,12 @@ I'm currently keeping this as a private repo for several reasons:
     this [CrossRef textmining API](http://tdmsupport.crossref.org/researchers/)
     will be more generally applicable and robust.
     
+-   Rate limits for scraping web pages pose a challenge, but I can write scripts
+    that rotate which journal they are calling, so we can get data from 5 journals
+    in 30 seconds rather than just 1.
+    
+-   Need to add some warning/error messages.
+    
 ## License
 
 Code in this package is licensed CC-0, while the text of analyses (.Rmd files
