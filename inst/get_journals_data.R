@@ -1,5 +1,6 @@
 require(devtools)
 #install_github("ropensci/rcrossref")
+#install_github("noamross/journaltimes", auth_token="2b5301f334fceb4ba3037372c370027b1485727e")
 require(rcrossref)
 require(rplos)
 require(plyr)
