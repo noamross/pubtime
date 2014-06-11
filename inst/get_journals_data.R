@@ -72,20 +72,20 @@ headers = c("doi", "journal", "volume", "issue", "editor", "submitted",
             "revised", "decision", "accepted", "online", "finalversion", 
             "issueonline", "issuedate")
 
-cat(headers, sep=", ", file="data/sample_records.csv")
-cat("\n",file="data/sample_records.csv", append=TRUE)
-cat("Errors\n======\n\n", file="data/sample_errors.csv")
+cat(headers, sep=", ", file="sample_records.csv")
+cat("\n",file="sample_records.csv", append=TRUE)
+cat("Errors\n======\n\n", file="sample_errors.csv")
 for(i in 1:max(laply(doi_sample_list, length))) {
   next_time = Sys.time() + WAITTIME
   for(doi in sapply(doi_sample_list, function (x) x[i])) {
     record = try(get_pub_history(doi))
     if(class(record) == "try-error") {
-      cat(doi, Sys.time(), record, sep=", ", file="data/sample_errors.csv", append=TRUE)
-      cat("\n", file="data/sample_errors.csv", append=TRUE)
+      cat(doi, Sys.time(), record, sep=", ", file="sample_errors.csv", append=TRUE)
+      cat("\n", file="sample_errors.csv", append=TRUE)
     } else {
      record[laply(record, class)=="Date"] = llply(record[laply(record, class)=="Date"], strftime)
-     cat(paste(record, collapse=", "), file="data/sample_records.csv", append=TRUE)
-     cat("\n",file="data/sample_records.csv", append=TRUE)
+     cat(paste(record, collapse=", "), file="sample_records.csv", append=TRUE)
+     cat("\n",file="sample_records.csv", append=TRUE)
     }
   }
   while(Sys.time() < next_time) {
@@ -94,4 +94,4 @@ for(i in 1:max(laply(doi_sample_list, length))) {
 }
 
 
-jrec = read.csv("data/sample_records.csv")
+jrec = read.csv("sample_records.csv")
