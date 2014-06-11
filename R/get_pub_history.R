@@ -96,7 +96,7 @@ get_esa_pub_history = function(doi) {
              issue = as.integer(stri_match_first_regex(page, 'Issue ([0-9]{1,2})')[,2]),
              issuedate = as.Date(paste("01", stri_match_first_regex(page, 'Issue [0-9]{1,2} \\(([[:alpha:]]+ [[:digit:]]{4})\\)')[,2]), "%d %B %Y"),
              onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),
-             editor = stri_match_first_regex(page, 'Editor: (.*)\\.</p>')[,2]
+             editor = stri_match_first_regex(page, 'Editor: ((?:[[:upper:]]\\.\\s?)*[^\\.<$]+)[^\\.<$]')[,2]
   )
   dates = stri_match_all_regex(page, '(Received|Revised|Accepted|Final version received|<b>Received</b>|revised|accepted|final version received|<b>published</b>): ([[:alnum:][:space:],]+)[;<\\.]')
   if (all(is.na(dates[[1]]))) {
@@ -108,21 +108,44 @@ get_esa_pub_history = function(doi) {
   return(c(out, datefields))
 }
 
+#' @import httr stringi plyr XML
+get_ecosph_pub_history = function(doi) {
+  page = content(GET(paste0("http://www.esajournals.org/doi/abs/", doi)), "text")
+  ab_XML = htmlTreeParse(page, useInternalNodes=T, asText=TRUE)
+  out = list(doi = doi,
+             volume = as.integer(stri_match_first_regex(page, 'Volume ([0-9]{1,2}),')[,2]),
+             issue = as.integer(stri_match_first_regex(page, 'Issue ([0-9]{1,2})')[,2]),
+             issuedate = as.Date(paste("01", stri_match_first_regex(page, 'Issue [0-9]{1,2} \\(([[:alpha:]]+ [[:digit:]]{4})\\)')[,2]), "%d %B %Y"),
+             onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),
+             editor = stri_match_first_regex(page, 'Editor: ([^<]*)\\.<')[,2]
+  )
+  dates = stri_match_all_regex(page, '(Received|Revised|Accepted|Final version received|<b>Received</b>|revised|accepted|final version received|<b>published</b>):? ([[:alnum:][:space:],]+)[;<\\.]')
+  if (all(is.na(dates[[1]]))) {
+    return(out)
+  } else {
+    datefields = as.list(as.Date(dates[[1]][,3], "%d %B %Y"))
+    names(datefields) = dates[[1]][,2]
+  }
+  return(c(out, datefields))
+}
+
 #' @export
 #' @import rcrossref
 get_pub_history = function(doi, oa_only=TRUE) {
   citation = cr_citation(doi)
+  closed = c("The American Naturalist")
+  if(citation$journal %in% closed & oa_only) return(closed_journal(citation))
   pubhistory = switch(citation$journal,
         `PLoS ONE` = get_plos_pub_history(doi),
         `Ecology Letters` = get_ecollet_pub_history(doi),
         `Ecology` = get_esa_pub_history(doi),
-        `Ecosphere` = get_esa_pub_history(doi),
+        `Ecosphere` = get_ecosph_pub_history(doi),
         `Ecological Applications` = get_esa_pub_history(doi),
         `Ecological Monographs` = get_esa_pub_history(doi),
         `The Condor` = get_condor_pub_history(doi),
         `The American Naturalist` = get_amnat_pub_history(doi),
         `PeerJ` = get_peerj_pub_history(doi),
-         unsupported_pub_history(citation)
+         return(unsupported_pub_history(citation))
   )
   pubhistory$journal = citation$journal
   pubhistory$volume = citation$volume
@@ -134,15 +157,20 @@ unsupported_pub_history = function(citation) {
   warning(paste(citation$journal), "is not yet supported. Returning NA values for dates.")
   return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$month))
 }
+
+closed_journal = function(citation) {
+  warning(paste(citation$journal), "requires a subscription to access this data. Returning NA values for dates.")
+  return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$month))
+}
   
 standardize_datenames = function(pubhistory) {
   names(pubhistory) = tolower(names(pubhistory))
   datenames = list(
-    submitted = c("received", "submitted", "recieveddate"),
+    submitted = c("received", "submitted", "recieveddate", "<b>received</b>", "manuscript received"),
     revised = c("revised"),
-    decision = c("first decision", "decision"),
-    accepted = c("accepted", "acceptdate"),
-    online = c("electronically published", "published online", "onlinedate", "article first published online", "online"),
+    decision = c("first decision", "decision", "first decision made"),
+    accepted = c("accepted", "acceptdate", "manuscript accepted"),
+    online = c("electronically published", "published online", "onlinedate", "article first published online", "online", "<b>published</b>"),
     finalversion = c("final version received", "finalversion"),
     issueonline = c("issue published online", "issueonline"),
     issuedate = c("issue published", "issuedate", "issuedate"),

@@ -4,6 +4,7 @@ require(rcrossref)
 require(rplos)
 require(plyr)
 require(stringr)
+require(journaltimes)
 
 # Ecology Letters
 ecollet_query = "1461-0248" #Ecology Letters ISSN
@@ -61,29 +62,36 @@ ecosph_dois = str_replace(ecosph_dois$doi, "http://dx.doi.org/", "")
 #             sort="year")
 #})
 
-doi_list = list(ecollet_dois=ecollet_dois, amnat_dois=amnat_dois,
+doi_list = list(ecollet_dois=ecollet_dois, # amnat_dois=amnat_dois,
                 ecol_dois=ecol_dois, ecosph_dois=ecosph_dois,
                 condor_dois=condor_dois)
 
+WAITTIME = 30 #seconds between calling the same journal
 doi_sample_list = llply(doi_list, function(x) {sample(x, 5)})
 headers = c("doi", "journal", "volume", "issue", "editor", "submitted", 
             "revised", "decision", "accepted", "online", "finalversion", 
             "issueonline", "issuedate")
 
-cat(paste(c(headers, "\n"), collapse=", "), file="data/sample_records.csv")
-cat("Errors \n", file="data/sample_errors.csv")
+cat(headers, sep=", ", file="data/sample_records.csv")
+cat("\n",file="data/sample_records.csv", append=TRUE)
+cat("Errors\n======\n\n", file="data/sample_errors.csv")
 for(i in 1:max(laply(doi_sample_list, length))) {
-  next_time = Sys.time() + 30
+  next_time = Sys.time() + WAITTIME
   for(doi in sapply(doi_sample_list, function (x) x[i])) {
     record = try(get_pub_history(doi))
     if(class(record) == "try-error") {
-      cat(paste(doi, Sys.time(), record, "\n", sep=", "), file="data/sample_errors.csv", append=TRUE)
+      cat(doi, Sys.time(), record, sep=", ", file="data/sample_errors.csv", append=TRUE)
+      cat("\n", file="data/sample_errors.csv", append=TRUE)
     } else {
      record[laply(record, class)=="Date"] = llply(record[laply(record, class)=="Date"], strftime)
-     cat(paste(c(record, "\n"), collapse=", "), file="data/sample_records.csv", append=TRUE)
+     cat(paste(record, collapse=", "), file="data/sample_records.csv", append=TRUE)
+     cat("\n",file="data/sample_records.csv", append=TRUE)
     }
   }
   while(Sys.time() < next_time) {
     dum <- 0
   }
 }
+
+
+jrec = read.csv("data/sample_records.csv")
