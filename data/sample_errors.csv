@@ -1,0 +1,22 @@
+Errors 
+10.1086/664080, 2014-06-11 16:13:32, Error in xpathApply(ab_XML, "//meta[@name=\"dc.Identifier\" and @scheme=\"doi\"]",  : 
+  subscript out of bounds
+, 
+10.1525/cond.2013.120014, 2014-06-11 16:13:40, Error in function (type, msg, asError = TRUE)  : 
+  easy handled already used in multi handle
+, 
+10.1086/670008, 2014-06-11 16:14:01, Error in xpathApply(ab_XML, "//meta[@name=\"dc.Identifier\" and @scheme=\"doi\"]",  : 
+  subscript out of bounds
+, 
+10.1525/cond.2012.114.1.239, 2014-06-11 16:14:10, Error in .bibentry_check_bibentry1(rval) : 
+  A bibentry of bibtype ‘Article’ has to specify the field: author
+, 
+10.1525/cond.2012.114.3.673, 2014-06-11 16:14:35, Error in .bibentry_check_bibentry1(rval) : 
+  A bibentry of bibtype ‘Article’ has to specify the field: author
+, 
+10.1525/cond.2012.110030, 2014-06-11 16:15:07, Error in .bibentry_check_bibentry1(rval) : 
+  A bibentry of bibtype ‘Article’ has to specify the field: author
+, 
+10.1525/cond.2010.090146, 2014-06-11 16:15:37, Error in function (type, msg, asError = TRUE)  : 
+  easy handled already used in multi handle
+, 
