@@ -40,12 +40,13 @@ journal.  Currently the package supports retrieval from:
 -   The Condor
 -   PeerJ
 -   American Naturalist (requires subscription access)
+-   Proceedings of the Royal Society B
+-   Biology Letters
 
 Journals to come:
 
 -   PLoS (mostly there but having access problems to their API)
--   Proceedings of the Royal Society B
--   Biology Letters
+
 
 Scraping journal websites is legally ambigous in the U.S., though legal in the
 U.K., and is a slow process because of rate limits. For this reason, the package
@@ -84,8 +85,8 @@ the `LICENSE` file.
     
 -   Need to add some warning/error messages.  Scraping may fail when articles are
     preprints, errata, etc.
-    
 -   Documentation
+-   Expand to more journals.  PLoS is next, but their API is down.
+-   Fix month/issue problems.  This field is not reliable.
 
--   Expand to more journals.  PLoS is next, but their API is  
     

@@ -72,6 +72,27 @@ repeat {
 
 peerj_dois = unlist(peerj_dois)
 
+# Proceedings B
+
+years = 2005:2014
+procb_query = "1471-2954"
+procb_dois = adply(years, 1, function(i) {
+    cr_search(query=procb_query, sort="year", type="Journal Article",
+              rows=1000, year=i)
+  })
+procb_dois = str_replace(procb_dois$doi, "http://dx.doi.org/", "")
+
+
+# Biology Letters
+
+years = 2005:2014
+biolet_query = "1744-957X"
+biolet_dois = adply(years, 1, function(i) {
+    cr_search(query=biolet_query, sort="year", type="Journal Article",
+              rows=1000, year=i)
+  })
+biolet_dois = str_replace(biolet_dois$doi, "http://dx.doi.org/", "")
+
 #PLOS
 
 #years = 2005:2014
@@ -82,7 +103,8 @@ peerj_dois = unlist(peerj_dois)
 
 doi_list = list(ecollet_dois=ecollet_dois, # amnat_dois=amnat_dois,
                 ecol_dois=ecol_dois, ecosph_dois=ecosph_dois,
-                condor_dois=condor_dois, peerj_dois=peerj_dois)
+                condor_dois=condor_dois, peerj_dois=peerj_dois,
+                procb_dois=procb_dois, biolet_dois = biolet_dois)
 
 
 WAITTIME = 30 #seconds between calling the same journal to avoid rate limits

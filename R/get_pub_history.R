@@ -1,6 +1,19 @@
 #  Get publication date from journals
 
 #' @import httr stringi plyr XML
+get_royal_pub_history = function(doi) {
+  page = GET(paste0("http://dx.doi.org/", doi))
+  ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
+  out = list(receiveddate = as.Date(xpathApply(ab_XML, '//li[@class="received"]', xmlGetAttr, "hwp:start")[[1]]),
+             acceptdate = as.Date(xpathApply(ab_XML, '//li[@class="accepted"]', xmlGetAttr, "hwp:start")[[1]]),
+             issuedate = as.Date(xpathApply(ab_XML, '//meta[@name="DC.Date"]', xmlGetAttr, "content")[[1]]),
+             onlinedate = as.Date(stri_match_first_regex(xpathApply(ab_XML, '//div[@id="slugline"]', xmlValue)[[1]], "\\d{2} [[:alpha:]]+ \\d{4}"), "%d %B %Y")
+             )
+  return(out)
+}
+
+
+#' @import httr stringi plyr XML
 get_ecollet_pub_history = function(doi) {
   page = GET(paste0("http://onlinelibrary.wiley.com/doi/", doi, "/abstract"))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
@@ -150,12 +163,14 @@ get_pub_history = function(doi, oa_only=TRUE) {
         `The Condor` = get_condor_pub_history(doi),
         `The American Naturalist` = get_amnat_pub_history(doi),
         `PeerJ` = get_peerj_pub_history(doi),
+        `Proceedings of the Royal Society B: Biological Sciences` = get_royal_pub_history(doi),
+        `Biology Letters` = get_royal_pub_history(doi),
          return(unsupported_pub_history(citation))
   )
   pubhistory$doi = citation$doi
   pubhistory$journal = citation$journal
   pubhistory$volume = citation$volume
-  pubhistory$issue = citation$issue
+  pubhistory$issue = citation$issue[1]
   pubhistory = standardize_datenames(pubhistory)
   return(pubhistory)
 }
