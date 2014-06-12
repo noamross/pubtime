@@ -55,6 +55,21 @@ ecosph_dois = adply(years, 1, function(i) {
 ecosph_dois = str_replace(ecosph_dois$doi, "http://dx.doi.org/", "")
 
 
+#PeerJ Ecology
+
+peerj_ecol_url = "https://peerj.com/articles/index.json?subject=1100"
+
+peerj_dois = list()
+
+repeat {
+  ecol_json = content(GET(peerj_ecol_url))
+  peerj_dois = c(peerj_dois, (laply(ecol_json$`_items`, function(x) x$doi)))
+  if(is.null(ecol_json$`_links`$`next`$href)) break
+  peerj_ecol_url = ecol_json$`_links`$`next`$href
+}
+
+peerj_dois = unlist(peerj_dois)
+
 #PLOS
 
 #years = 2005:2014
@@ -65,7 +80,7 @@ ecosph_dois = str_replace(ecosph_dois$doi, "http://dx.doi.org/", "")
 
 doi_list = list(ecollet_dois=ecollet_dois, # amnat_dois=amnat_dois,
                 ecol_dois=ecol_dois, ecosph_dois=ecosph_dois,
-                condor_dois=condor_dois)
+                condor_dois=condor_dois, peerj_dois=peerj_dois)
 
 WAITTIME = 30 #seconds between calling the same journal
 doi_sample_list = llply(doi_list, function(x) {sample(x, 5)})

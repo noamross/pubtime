@@ -32,7 +32,7 @@ get_condor_pub_history = function(doi) {
              volume = as.integer(stri_match_first_regex(content(page, "text"), "Volume\\s+(\\d{1,3})[^\\w]")[2]),
              issue = as.integer(stri_match_first_regex(content(page, "text"), "Issue\\s+(\\d{1,3})[^\\w]")[2]),
              onlinedate = as.Date(xpathApply(ab_XML, '//meta[@name="dc.Date" and @scheme="WTN8601"]', xmlGetAttr, "content")[[1]]),  
-             recieveddate = as.Date(stri_match_first_regex(content(page, "text"), "Received:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y"),
+             receiveddate = as.Date(stri_match_first_regex(content(page, "text"), "Received:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y"),
              acceptdate = as.Date(stri_match_first_regex(content(page, "text"), "Accepted:\\s+</strong>([[:alpha:]]+\\s+\\d{1,2},\\s+\\d{4})")[2], "%B %d, %Y"),
              issuedate = as.Date(paste("1", stri_match_first_regex(content(page, "text"), "[[:upper:]][[:lower:]]{2} \\d{4}")), "%d %b %Y")
   )
@@ -152,8 +152,10 @@ get_pub_history = function(doi, oa_only=TRUE) {
         `PeerJ` = get_peerj_pub_history(doi),
          return(unsupported_pub_history(citation))
   )
+  pubhistory$doi = citation$doi
   pubhistory$journal = citation$journal
   pubhistory$volume = citation$volume
+  pubhistory$issue = citation$issue
   pubhistory = standardize_datenames(pubhistory)
   return(pubhistory)
 }
@@ -171,7 +173,7 @@ closed_journal = function(citation) {
 standardize_datenames = function(pubhistory) {
   names(pubhistory) = tolower(names(pubhistory))
   datenames = list(
-    submitted = c("received", "submitted", "recieveddate", "<b>received</b>", "manuscript received"),
+    submitted = c("received", "submitted", "receiveddate", "<b>received</b>", "manuscript received"),
     revised = c("revised"),
     decision = c("first decision", "decision", "first decision made"),
     accepted = c("accepted", "acceptdate", "manuscript accepted"),
