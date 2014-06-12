@@ -14,7 +14,7 @@ get_royal_pub_history = function(doi) {
 
 
 #' @import httr stringi plyr XML
-get_ecollet_pub_history = function(doi) {
+get_wiley_pub_history = function(doi) {
   page = GET(paste0("http://onlinelibrary.wiley.com/doi/", doi, "/abstract"))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
   out = list(doi = xpathApply(ab_XML, '//meta[@name="citation_doi"]', xmlGetAttr, "content")[[1]],
@@ -155,7 +155,7 @@ get_pub_history = function(doi, oa_only=TRUE) {
   if(citation$journal %in% closed & oa_only) return(closed_journal(citation))
   pubhistory = switch(citation$journal,
         `PLoS ONE` = get_plos_pub_history(doi),
-        `Ecology Letters` = get_ecollet_pub_history(doi),
+        `Ecology Letters` = get_wiley_pub_history(doi),
         `Ecology` = get_esa_pub_history(doi),
         `Ecosphere` = get_ecosph_pub_history(doi),
         `Ecological Applications` = get_esa_pub_history(doi),
@@ -165,6 +165,7 @@ get_pub_history = function(doi, oa_only=TRUE) {
         `PeerJ` = get_peerj_pub_history(doi),
         `Proceedings of the Royal Society B: Biological Sciences` = get_royal_pub_history(doi),
         `Biology Letters` = get_royal_pub_history(doi),
+        `Journal of Ecology` = get_wiley_pub_history(doi),
          return(unsupported_pub_history(citation))
   )
   pubhistory$doi = citation$doi
@@ -176,7 +177,7 @@ get_pub_history = function(doi, oa_only=TRUE) {
 }
 
 unsupported_pub_history = function(citation) {
-  warning(paste(citation$journal), "is not yet supported. Returning NA values for dates.")
+  warning(paste(citation$journal), " is not yet supported. Returning NA values for dates.")
   return(list(doi = citation$doi, journal = citation$journal, volume= citation$volume, issue=citation$month))
 }
 
@@ -192,10 +193,11 @@ standardize_datenames = function(pubhistory) {
     revised = c("revised"),
     decision = c("first decision", "decision", "first decision made"),
     accepted = c("accepted", "acceptdate", "manuscript accepted"),
-    online = c("electronically published", "published online", "onlinedate", "article first published online", "online", "<b>published</b>"),
+    preprint = c("preprint", "accepted manuscript online online"),
+    online = c("electronically published", "published online", "onlinedate", "article first published online", "online", "<b>published</b>", "accepted manuscript online"),
     finalversion = c("final version received", "finalversion"),
     issueonline = c("issue published online", "issueonline"),
-    issuedate = c("issue published", "issuedate", "issuedate"),
+    issuedate = c("issue published", "issuedate", "issuedate", "issue published online"),
     editor = c("editor")
   )
   for(i in 1:length(datenames)) {
