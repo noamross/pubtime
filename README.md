@@ -73,8 +73,14 @@ I'm currently keeping this as a private repo for several reasons:
 3.  It may be worthwhile to give some of the journal editors a sneak peak before
     making some of this work public.
 
+## License
 
-## Development notes
+Code in this package is licensed CC-0.The text of analyses (`.md` and `.Rmd` files
+found in the `inst` directory), are licensed CC-BY-NC (in anticipation of the need
+to comply with UK copyright law for text-ming). Text of licences are in
+the `LICENSE` file. 
+
+## TODOs/ Development notes
     
 -   Need to add some warning/error messages.  Scraping may fail when articles are
     preprints, errata, etc.
@@ -83,8 +89,3 @@ I'm currently keeping this as a private repo for several reasons:
 
 -   Expand to more journals.  PLoS is next, but their API is  
     
-## License
-
-Code in this package is licensed CC-0, while the text of analyses (`.md` and `.Rmd` files
-found in the `inst` directory), are licensed CC-BY.  Text of licences are in
-the `LICENSE` file.
