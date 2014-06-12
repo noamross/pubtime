@@ -1,0 +1,79 @@
+
+Here is the distribution of submit-to-accept times:
+
+```{r}
+require(plyr)
+jrec = read.csv("sample_records.csv")
+levels(jrec$journal)[levels(jrec$journal)=="Proceedings of the Royal Society B: Biological Sciences"] = "Proc. B"
+jrec[,6:13] = lapply(jrec[,6:13], as.Date)
+jrec$SubToAcc = as.integer(jrec$accepted - jrec$submitted)
+```
+```{r}
+require(ggplot2)
+
+ggplot(subset(jrec, SubToAcc >= 0), aes(x=journal, y = SubToAcc, fill=journal, col=journal)) +
+  geom_violin(alpha = 0.5, linetype=0, adjust=0.5) +
+  geom_jitter(position = position_jitter(width = .05), size=2) +
+  coord_flip() +
+  theme(legend.position="none",
+        panel.grid.major.x=element_line(colour="grey", size=0.5, linetype=1),
+        panel.grid.major.y=element_blank(),
+        panel.grid.minor.x=element_blank(),
+        panel.grid.minor.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.background=element_blank(),
+        text=element_text(family="Lato", size=14),
+        axis.title=element_text(size=18),
+        axis.text=element_text(color="black",size=13)) +
+        ggtitle("Submit-to-Accept Times of Select Journals\n50 random samples from the past 10 years") +
+  xlab("") + ylab("Days")
+```
+
+```{r}
+require(ggplot2)
+
+ggplot(subset(jrec, SubToAcc >= 0), aes(x=submitted, y=SubToAcc, fill=journal, col=journal)) +
+  geom_point(size=2) +
+  theme(legend.position="none",
+        panel.grid.major.x=element_line(colour="grey", size=0.5, linetype=1),
+        panel.grid.major.y=element_blank(),
+        panel.grid.minor.x=element_blank(),
+        panel.grid.minor.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.background=element_blank(),
+        text=element_text(family="Lato", size=14),
+        axis.title=element_text(size=18),
+        axis.text=element_text(color="black",size=13)) +
+        ggtitle("Submit-to-Accept Times of Select Journals\n50 random samples from the past 10 years") +
+  xlab("") + ylab("Days")
+```
+
+  
+```{r}
+ggplot(droplevels(subset(jrec, SubToAcc >= 0 & !is.na(editor))),
+              aes(y=editor, x = SubToAcc, fill=editor, col=editor)) +
+  facet_wrap(~journal, scales="free_y") +
+  geom_violin(alpha = 0.5, linetype=0, adjust=0.5) +
+  geom_point(size=2) +
+  #coord_flip() +
+  theme(legend.position="none",
+        panel.grid.major.x=element_line(colour="grey", size=0.5, linetype=1),
+        panel.grid.major.y=element_blank(),
+        panel.grid.minor.x=element_blank(),
+        panel.grid.minor.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.background=element_blank()
+    #   text=element_text(family="Lato", size=14),
+    #    axis.title=element_text(size=18),
+    #    axis.text=element_text(color="black",size=13)
+    ) +
+   ggtitle("Submit-to-Accept Times of Select Journals\nby Editor") +
+  xlab("") + ylab("Days")
+```  
+```{r}
+jrec[(jrec$SubToAcc < 15 & !is.na(jrec$SubToAcc)), c(1,2,3,5,6,9,14)]
+```
+
+```{r}
+jrec[(jrec$SubToAcc > 250 & !is.na(jrec$SubToAcc)), c(1,2,3,5,6,9,14)]
+```
