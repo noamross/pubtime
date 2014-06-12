@@ -9,5 +9,9 @@ Depends:
 Imports:
     RCurl,
     stringi,
+    rcrossref,
+    httr,
+    XML,
+    plyr
 License: CC-0
 LazyData: true

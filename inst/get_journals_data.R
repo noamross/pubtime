@@ -7,6 +7,8 @@ require(plyr)
 require(stringr)
 require(journaltimes)
 
+#First, get DOIs for all of the journals of interest
+
 # Ecology Letters
 ecollet_query = "1461-0248" #Ecology Letters ISSN
 ecollet_dois = cr_search(query=ecollet_query, sort="year", type="Journal Article",
@@ -82,15 +84,23 @@ doi_list = list(ecollet_dois=ecollet_dois, # amnat_dois=amnat_dois,
                 ecol_dois=ecol_dois, ecosph_dois=ecosph_dois,
                 condor_dois=condor_dois, peerj_dois=peerj_dois)
 
-WAITTIME = 30 #seconds between calling the same journal
+
+WAITTIME = 30 #seconds between calling the same journal to avoid rate limits
+
+#We just want to retrieve a sample sub-set for now.
 doi_sample_list = llply(doi_list, function(x) {sample(x, 5)})
+
+#Create files for both output and en error log:
+
 headers = c("doi", "journal", "volume", "issue", "editor", "submitted", 
             "revised", "decision", "accepted", "online", "finalversion", 
             "issueonline", "issuedate")
-
 cat(headers, sep=", ", file="sample_records.csv")
 cat("\n",file="sample_records.csv", append=TRUE)
 cat("Errors\n======\n\n", file="sample_errors.csv")
+
+# Retrieve results and write them to the files, 
+# looping through journals
 for(i in 1:max(laply(doi_sample_list, length))) {
   next_time = Sys.time() + WAITTIME
   for(doi in sapply(doi_sample_list, function (x) x[i])) {

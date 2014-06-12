@@ -1,20 +1,57 @@
-# A project to examine journal acceptance times
+# pubtime
+
+A package to retreive submission-to-acceptance/publication dates for academic
+journals.
 
 This is an in-development project to examine the time-to acceptance of various
 journals in ecology, and possibly identify journals faking submission times.
 The theory is that the latter will have a set of oddly short review times that
 are likely to fail to line up with the dates encoded in DOI schemes.
 
-This is organized as an R package, but it's not really useful in that format
-yet, though evenentually the aim will be for it to be a data package for easy
-reproducibility.  I'm not sure if it will install properly as a private repo,
-anyway.  For now I recommend just cloning the repository.
-
-For now, data go into `data/`, functions to scrape data from various journal
-sites are in `R/`, scripts for scraping are in `inst/` as R files, and data
-analyses should go in `inst/` as `.Rmd` files. 
-
 See `CONTRIBUTING.md` for how you can help.
+
+## Installation
+
+You can install the package using `devtools`.  Since the project is private,
+you need an authorization token which you can get 
+[here](https://github.com/settings/tokens/new).
+    
+    library(devtools)
+    install_github("noamross/pubtime", auth_token=YOURTOKEN)
+    library(pubtime)
+
+## Description
+
+The package basically has one function, `get_pub_history()`, which takes an
+article DOI and returns a list of article metadata and the dates it passed
+through the publication process.  The function works by first using
+`rcrossref::cr_cn` to retrieve some basic metadata, then scraping the journal
+web page for the dates.
+
+Since publication history dates aren't stored in any standard location or
+format, sub-functions (e.g., `get_condor_pub_history`) are needed for each
+journal.  Currently the package supports retrieval from:
+
+-   Ecology
+-   Ecology Letters
+-   Ecological Applications
+-   Ecological Monographs
+-   Ecosphere
+-   The Condor
+-   PeerJ
+-   American Naturalist (requires subscription access)
+
+Journals to come:
+
+-   PLoS (mostly there but having access problems to their API)
+-   Proceedings of the Royal Society B
+-   Biology Letters
+
+Scraping journal websites is legally ambigous in the U.S., though legal in the
+U.K., and is a slow process because of rate limits. For this reason, the package
+will eventually include data scraped.
+
+See `inst/get_journals_date` for an implementation of scraping.
 
 ## Cautions
 
@@ -38,22 +75,16 @@ I'm currently keeping this as a private repo for several reasons:
 
 
 ## Development notes
-
--   Journal submission/accept times are often not part of any formal metadata,
-    but must be scraped from the article abstract page.  For bigger publisher
-    sites, they are sometimes in formal `<div>`, at least.
-
--   I've started this by scraping publisher webpages, but it's possible that
-    this [CrossRef textmining API](http://tdmsupport.crossref.org/researchers/)
-    will be more generally applicable and robust.
     
 -   Need to add some warning/error messages.  Scraping may fail when articles are
     preprints, errata, etc.
     
--   TODO: Fix problem with Condor (and others) when cr_citation throws an error
+-   Documentation
+
+-   Expand to more journals.  PLoS is next, but their API is  
     
 ## License
 
-Code in this package is licensed CC-0, while the text of analyses (.Rmd files
+Code in this package is licensed CC-0, while the text of analyses (`.md` and `.Rmd` files
 found in the `inst` directory), are licensed CC-BY.  Text of licences are in
 the `LICENSE` file.
