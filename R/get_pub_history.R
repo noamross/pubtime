@@ -166,6 +166,7 @@ get_pub_history = function(doi, oa_only=TRUE) {
         `Proceedings of the Royal Society B: Biological Sciences` = get_royal_pub_history(doi),
         `Biology Letters` = get_royal_pub_history(doi),
         `Journal of Ecology` = get_wiley_pub_history(doi),
+        `Methods in Ecology and Evolution` = get_wiley_pub_history(doi)
          return(unsupported_pub_history(citation))
   )
   pubhistory$doi = citation$doi
