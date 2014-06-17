@@ -1,0 +1,39 @@
+editor: editor
+submitted:
+- received
+- submitted
+- receiveddate
+- <b>received</b>
+- manuscript received
+revised: revised
+decision:
+- first decision
+- decision
+- first decision made
+accepted:
+- accepted
+- acceptdate
+- manuscript accepted
+preprint:
+- preprint
+- accepted manuscript online
+finalversion:
+- final version received
+- finalversion
+online:
+- electronically published
+- published online
+- onlinedate
+- article first published online
+- online
+- <b>published</b>
+- accepted manuscript online
+issueonline:
+- issue published online
+- issueonline
+issuedate:
+- issue published
+- issuedate
+- issuedate
+- issue published online
+

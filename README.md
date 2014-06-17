@@ -87,6 +87,15 @@ the `LICENSE` file.
     preprints, errata, etc.
 -   Documentation
 -   Expand to more journals.  PLoS is next, but their API is down.
--   Fix month/issue problems.  This field is not reliable.
+-   Fix month/issue problems.  This field is not reliable. (Or just kill it)
+-   Break up functions into files
+-   Slim down functions
+-   Write some scraping helper functions
+    -   Scrape, with delays by publisher group, with logfiles
+    -   CrossRef-based DOI scraping: get DOIs, year and ISSN
+-   Expand CONTRIBUTING
+-   Hidden function to update data with contributed set
+-   Function to update exiting data sets
+    
 
     

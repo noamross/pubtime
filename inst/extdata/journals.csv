@@ -1,0 +1,15 @@
+name;shortname;ISSN;open;scraper
+PLoS ONE;PLoS ONE;;TRUE;get_plos_pub_history
+Ecology Letters;Ecol Letters;1461-0248;TRUE;get_wiley_pub_history
+Ecology;Ecology;0012-9658;TRUE;get_esa_pub_history
+Ecosphere;Ecosphere;2150-8925;TRUE;get_ecosph_pub_history
+Ecological Applications;Ecol Applications;;TRUE;get_esa_pub_history
+Ecological Monographs;Ecol Monographs;;TRUE;get_esa_pub_history
+The Condor;The Condor;1938-5129;TRUE;get_condor_pub_history
+The American Naturalist;Am Naturalist;1537-5323;FALSE;get_amnat_pub_history
+PeerJ;PeerJ;;TRUE;get_peerj_pub_history
+Proceedings of the Royal Society B: Biological Sciences;Proc B;1471-2954;TRUE;get_royal_pub_history
+Biology Letters;Biol Letters;1744-957X;TRUE;get_royal_pub_history
+Journal of Ecology;J Ecology;1365-2745;TRUE;get_wiley_pub_history
+Methods in Ecology and Evolution;Methods in Ecol and Evo;;TRUE;get_wiley_pub_history
+Ecosystems;Ecosystems;;FALSE;get_springer_history
