@@ -29,4 +29,5 @@ datenames = yaml.load_file(system.file("extdata", "datenames.yaml",
 #' the journal website}
 #'@export
 journals = read.csv(system.file("extdata", "journals.csv",
-                                package="journaltimes"))
+                                package="journaltimes"),
+                    stringsAsFactors = FALSE)
