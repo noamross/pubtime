@@ -1,4 +1,4 @@
-Package: journaltimes
+Package: pubtime
 Title: Analyzing publication times for ecology journals
 Version: 0.1
 Authors: "Noam Ross <noam.ross@gmail.com> [aut, cre]"
