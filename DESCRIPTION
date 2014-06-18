@@ -1,7 +1,8 @@
 Package: journaltimes
 Title: Analyzing publication times for ecology journals
 Version: 0.1
-Authors: "Noam Roos <noam.ross@gmail.com> [aut, cre]"
+Authors: "Noam Ross <noam.ross@gmail.com> [aut, cre]"
+Maintainer: Noam Ross <noam.ross@gmail.com>
 Description: Data and code for a project to analyze publication times for
     ecology journals
 Depends:
@@ -13,5 +14,5 @@ Imports:
     XML,
     plyr,
     yaml
-License: CC-0
+License: CC0 (code), CC-BY-NC (text and data)
 LazyData: true
