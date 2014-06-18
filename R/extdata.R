@@ -8,7 +8,7 @@
 #' @import yaml
 #' @export
 datenames = yaml.load_file(system.file("extdata", "datenames.yaml",
-                                       package="journaltimes"))
+                                       package="pubtime"))
 
 
 #'Supported journals
@@ -29,5 +29,5 @@ datenames = yaml.load_file(system.file("extdata", "datenames.yaml",
 #' the journal website}
 #'@export
 journals = read.csv(system.file("extdata", "journals.csv",
-                                package="journaltimes"),
+                                package="pubtime"),
                     stringsAsFactors = FALSE)
