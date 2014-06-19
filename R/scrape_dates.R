@@ -19,7 +19,8 @@
 #' prepended to \code{filename}.
 #' @param errors The name of the file to write the error log to
 #' @export
-#' @import plyr lubridate
+#' @import plyr
+#' @importFrom lubridate dseconds
 scrape_dates = function(dois, pause=20, filename="_pubtimes.csv",
                         split_journals = TRUE, errors = "pubtime_errs.csv",
                         progress=FALSE, silent_errs=TRUE) {
