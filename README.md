@@ -20,10 +20,11 @@ time-consuming throttled scraping. See `CONTRIBUTING.md` for more.
 You can install the package using `devtools`.  Since the project is private,
 you need an authorization token which you can get 
 [here](https://github.com/settings/tokens/new). You also need to install
-`rcrossref` before `pubtime`, as that dependency is not on CRAN.
+`rcrossref` and `rplos` before `pubtime`, as those dependencies are not on CRAN.
     
     library(devtools)
     install_github("ropensci/rcrossref")
+    install_github("ropensci/rplos")
     install_github("noamross/pubtime", auth_user=GITHUBUSERNAME, auth_token=YOURTOKEN)
     library(pubtime)
 
