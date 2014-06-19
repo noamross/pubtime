@@ -4,7 +4,7 @@ A package to retreive submission-to-acceptance/publication dates for academic
 journals.
 
 This is an in-development project to examine the time-to acceptance of various
-journals (starting in ecology), and possibly identify journals faking submission times.
+journals (starting in ecology), and possibly identify journals using reject-and-resubmit to shorten apparent time to publication..
 The theory is that the latter will have a set of oddly short review times that
 are likely to fail to line up with the dates encoded in DOI schemes.
 
