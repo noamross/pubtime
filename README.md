@@ -1,3 +1,5 @@
+[![Build Status](https://magnum.travis-ci.com/noamross/pubtime.svg?token=JkBWVYYe2yNqyquByRrv&branch=master)](https://magnum.travis-ci.com/noamross/pubtime)
+
 # pubtime
 
 A package to retreive submission-to-acceptance/publication dates for academic
