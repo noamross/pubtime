@@ -16,5 +16,7 @@ Imports:
     yaml,
     rplos,
     lubridate
+Suggests:
+    testthat
 License: CC0 (code), CC-BY-NC (text and data)
 LazyData: true
