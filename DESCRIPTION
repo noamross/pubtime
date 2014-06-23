@@ -13,6 +13,8 @@ Imports:
     httr,
     XML,
     plyr,
-    yaml
+    yaml,
+    rplos,
+    lubridate
 License: CC0 (code), CC-BY-NC (text and data)
 LazyData: true
