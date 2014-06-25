@@ -30,10 +30,10 @@ I recommend using functions from `XML` and `stringi` packages for your scraper. 
 the existing functions in `R/scrapers.R` for examples.
   
 Once you have written your scraper, we want to map the *journals'* terms for dates
-onto our standard typology.  Look at `inst/extdata/datenames.yaml`.  This file
+onto our standard typology.  Look at `inst/journal_data/datenames.yaml`.  This file
 contains the mapping.  If the terms your journal uses aren't in here, add them.
 
-Now add a line to `inst/extdata/journals.csv` for your journal.  The fields
+Now add a line to `inst/journal_data/journals.csv` for your journal.  The fields
 are described in `?journals`.  This is where the wrapper function
 `get_pub_history` looks.
 
@@ -69,7 +69,7 @@ So, to contribute data:
 4.  Check the error log, which show DOIs where the scrapers failed.   Some DOIs
     fail because they are for articles without publication histories (e.g., errata). That's fine.
     But make sure you aren't missing real data.
-4.  Put your script in `inst/` and the resulting data in `inst/extdata`.
+4.  Put your script in `inst/` and the resulting data in `inst/journal_data`.
 5.  Pull request!
 
 
