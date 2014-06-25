@@ -4,6 +4,7 @@ submitted:
 - submitted
 - receiveddate
 - <b>received</b>
+- received_date
 - manuscript received
 revised: revised
 decision:
@@ -14,6 +15,7 @@ accepted:
 - accepted
 - acceptdate
 - manuscript accepted
+- accepted_date
 preprint:
 - preprint
 - accepted manuscript online
@@ -26,6 +28,7 @@ online:
 - onlinedate
 - article first published online
 - online
+- publication_date
 - <b>published</b>
 - accepted manuscript online
 issueonline:

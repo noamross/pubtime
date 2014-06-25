@@ -71,7 +71,8 @@ ggplot(droplevels(subset(jrec, SubToAcc >= 0 & !is.na(editor))),
   xlab("") + ylab("Days")
 ```  
 ```{r}
-jrec[(jrec$SubToAcc < 15 & !is.na(jrec$SubToAcc)), c(1,2,3,5,6,9,14)]
+shorts = jrec[(jrec$SubToAcc < 15 & !is.na(jrec$SubToAcc)), c(1,2,3,5,6,9,14)]
+shorts[order(shorts$SubToAcc),]
 ```
 
 ```{r}
