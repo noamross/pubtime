@@ -7,7 +7,7 @@
 #' @format list (stored as YAML file)
 #' @import yaml
 #' @export
-datenames = yaml.load_file(system.file("extdata", "datenames.yaml",
+datenames = yaml.load_file(system.file("journal_data", "datenames.yaml",
                                        package="pubtime"))
 
 
@@ -28,6 +28,6 @@ datenames = yaml.load_file(system.file("extdata", "datenames.yaml",
 #' \item{scraper}{The name of the function to scrape publication dates from
 #' the journal website}
 #'@export
-journals = read.csv(system.file("extdata", "journals.csv",
+journals = read.csv(system.file("journal_data", "journals.csv",
                                 package="pubtime"),
                     stringsAsFactors = FALSE)
