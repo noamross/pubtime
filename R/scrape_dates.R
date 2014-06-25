@@ -46,7 +46,11 @@ scrape_dates = function(dois, pause=20, filename="_pubtimes.csv",
         if(progress) errs = errs + 1
       } else {
         record[laply(record, class)=="Date"] = llply(record[laply(record, class)=="Date"], strftime)
-        if(split_journals) filename2 = paste(record$journal, filename, sep="")
+        if(split_journals) {
+          filename2 = paste(record$journal, filename, sep="")
+        } else {
+          filename2 = filename
+        }
         if (!file.exists(filename2)) {
           cat(paste(headers, collapse=","),"\n", sep="", file=filename2)
         }
