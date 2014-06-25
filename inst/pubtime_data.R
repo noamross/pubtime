@@ -16,11 +16,12 @@ pubtime_list = lapply(pubtime_files, utils::read.csv)
 
 
 if(length(pubtime_list) > 1) {
-  pubtimes = do.call(pubtime_list, rbind)
+  pubtimes = do.call(rbind, pubtime_list)
 } else {
   pubtimes = pubtime_list[[1]]
 }
 
 rm(data_locs, data_loc, pubtime_files, pubtime_list)
 pubtimes[,5:13] = lapply(pubtimes[,5:13], as.Date)
-save(pubtimes, file="data/pubtimes.rda")
+write.csv(pubtimes, file=file.path("data", "pubtimes.ccv"), sep=",",
+          row.names=FALSE)
