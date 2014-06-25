@@ -16,7 +16,7 @@ package* that contains information scraped from various journals, as well
 as containing functions to retrieve data from more journals.
 
 Contributors can help by writing scraping functions for more journals, and doing
-time-consuming throttled scraping. See `CONTRIBUTING.md` for more.
+time-consuming throttled scraping. See [`CONTRIBUTING.md`](https://github.com/noamross/pubtime/blob/master/CONTRIBUTING.md) for more.
 
 ## Installation
 
