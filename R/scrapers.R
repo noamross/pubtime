@@ -1,6 +1,7 @@
 # Functions for scraping dates from various journals
 
-#' @import httr stringi XML
+#' @import httr XML
+#' @importFrom stringi stri_match_first_regex
 get_royal_pub_history = function(doi) {
   page = GET(paste0("http://dx.doi.org/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
@@ -24,7 +25,8 @@ get_springer_pub_history = function(doi) {
   return(out)
 }
 
-#' @import httr stringi plyr XML
+#' @import httr plyr XML
+#' @importFrom stringi stri_match_all_regex
 get_wiley_pub_history = function(doi) {
   page = GET(paste0("http://onlinelibrary.wiley.com/doi/", doi, "/abstract"))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
@@ -42,7 +44,8 @@ get_wiley_pub_history = function(doi) {
   return(c(out, pubdates))
 }
 
-#' @import httr stringi plyr XML
+#' @import httr plyr XML
+#' @importFrom stringi stri_match_first_regex
 get_condor_pub_history = function(doi) {
   page = GET(paste0("http://www.bioone.org/doi/abs/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
@@ -77,7 +80,8 @@ get_peerj_pub_history = function(doi) {
             )
 }
 
-#' @import httr stringi XML
+#' @import httr XML
+#' @importFrom stringi stri_match_first_regex stri_match_all_regex
 get_amnat_pub_history = function(doi) {
   page = GET(paste0("http://www.jstor.org/stable/info/", doi))
   ab_XML = htmlTreeParse(content(page, "text"), useInternalNodes=T, asText=TRUE)
@@ -93,7 +97,8 @@ get_amnat_pub_history = function(doi) {
   }
 }
 
-#' @import httr stringi XML
+#' @import httr XML
+#' @importFrom stringi stri_match_first_regex stri_match_all_regex
 get_esa_pub_history = function(doi) {
   page = content(GET(paste0("http://www.esajournals.org/doi/abs/", doi)), "text")
   ab_XML = htmlTreeParse(page, useInternalNodes=T, asText=TRUE)
@@ -111,7 +116,8 @@ get_esa_pub_history = function(doi) {
   return(c(out, datefields))
 }
 
-#' @import httr stringi XML
+#' @import httr XML
+#' @importFrom stringi stri_match_first_regex stri_match_all_regex
 get_ecosph_pub_history = function(doi) {
   page = content(GET(paste0("http://www.esajournals.org/doi/abs/", doi)), "text")
   ab_XML = htmlTreeParse(page, useInternalNodes=T, asText=TRUE)

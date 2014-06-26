@@ -7,7 +7,7 @@
 #' @format list (stored as YAML file)
 #' @import yaml
 #' @export
-datenames = yaml.load_file(system.file("journal_data", "datenames.yaml",
+datenames = yaml::yaml.load_file(system.file("journal_data", "datenames.yaml",
                                        package="pubtime"))
 
 

@@ -2,7 +2,8 @@
 #' @param ISSN The journal ISSN number
 #' @param years a vector of years for which
 #' @export
-#' @import rcrossref plyr stringi
+#' @import rcrossref plyr
+#' @importFrom stringi stri_replace_first_fixed
 get_dois = function(ISSN, years) {
   dois = adply(years, 1, function(i) {
                 d = cr_search(query=ISSN, sort="year", type="Journal Article",
