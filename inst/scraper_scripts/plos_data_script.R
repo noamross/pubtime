@@ -17,12 +17,11 @@ plos_dat= searchplos(q=paste0("subject:Ecology"), fq='doc_type:full',
                           "accepted_date", "publication_date"))
 
 #Clean up Editor names
-plos_dat$editor = stri_trim_both(stri_replace_all_regex(stri_replace_all_regex(iconv(plos_dat$editor, to="ASCII//TRANSLIT"), "[.'`\"]", "")))
-
+plos_dat$editor = clean_editor_names(plos_dat$editor)
 
 # Standardize types
 plos_dat[,3:5] = llply(plos_dat[,3:5], function(z) {
-  as.Date(stri_extract_first_regex(z, "\\d{4}-\\d{2}-\\d{2}"))
+  as.Date(stri_extract_first_regex(z, "\\d{4}-\\d{2}-\\d{2,}"))
 })
 
 
