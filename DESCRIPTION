@@ -15,7 +15,8 @@ Imports:
     plyr,
     yaml,
     rplos,
-    lubridate
+    lubridate,
+    magrittr
 Suggests:
     testthat
 License: CC0 (code), CC-BY-NC (text and data)
