@@ -15,7 +15,7 @@ test_that("get_pub_history works", {
 })
   
 context("data")
-
+library(stringi)
 #for these tests, load the csv files from journal_data
 data_path = file.path(system.file("journal_data", package="pubtime"))
 pubtimes_files = list.files(data_path, pattern=".*_pubtimes\\.csv")
