@@ -1,0 +1,13 @@
+journals:
+  - PeerJ
+url: w*?\.?jstor\.com
+elements:
+  editor:
+    selector:  //dd[@itemprop="editor"]
+  received:
+    selector:  //time[@itemprop="dateCreated"]
+  accepted:
+    selector:  //time[@itemprop="dateModified"]
+  online: 
+    selector:  //time[@itemprop="datePublished"]
+

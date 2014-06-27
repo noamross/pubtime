@@ -1,0 +1,26 @@
+journals:
+  - The American Naturalist
+url: www\.jstor\.org
+elements:
+  received:
+    selector:  //p[@class="articleBody_submissionDate"]/span[@class="string-date"]
+    regex:  '(?<=(?:submitted|received)[[:punct:]\s]{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    date_format: '%B %d, %Y'
+  accepted:
+    selector:  //p[@class="articleBody_submissionDate"]/span[@class="string-date"]
+    regex:  '(?<=accepted[[:punct:]\s]{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    date_format: '%B %d, %Y'
+  online: 
+    selector:  //p[@class="articleBody_submissionDate"]/span[@class="string-date"]
+    regex:  '(?<=electronically\spublished[[:punct:]\s]{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    date_format: '%B %d, %Y'
+  issue:
+    selector: //div[@id="SCData"]
+    attribute: data-toctitle
+    regex: '(?<=no\.\s\d{1,2},\s)[[:alpha:]]+\s\d{4}'
+    date_format: '%B %Y'
+  issueonline:
+    selector: //meta[@name="dc.Date" and @scheme="WTN8601"]
+    attribute: content
+    date_format: '%B %d, %Y'
+

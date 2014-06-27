@@ -1,0 +1,25 @@
+journals:
+  - PLoS ONE
+  - PLoS Computational Biology
+  - PLoS Biology
+  - PLoS Medicine
+  - PLoS Pathogens
+  - PLoS Neglected Tropical Diseases
+  - PLoS Genetics
+url: www\.plos[\w]+\.org
+elements:
+  editor:
+    selector:  //div[@class="articleinfo"]/p
+    regex:  '(?<=editor[[punct:\s]]{1,3})[^,]+(?=,)'
+  received:
+    selector:  //div[@class="articleinfo"]/p
+    regex: '(?<=received[[punct:\s]]{1,3})[[:alpha:]]+\s\d{1,2},\s\d{4}'
+    date_format: '%B %d, %Y'
+  accepted:
+    selector:  //div[@class="articleinfo"]/p
+    regex: '(?<=accepted[[punct:\s]]{1,3})[[:alpha:]]+\s\d{1,2},\s\d{4}'
+    date_format: '%B %d, %Y'
+  online: 
+    selector:  //div[@class="articleinfo"]/p
+    regex: '(?<=published[[punct:\s]]{1,3})[[:alpha:]]+\s\d{1,2},\s\d{4}'
+    date_format: '%B %d, %Y'
