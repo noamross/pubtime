@@ -1,0 +1,24 @@
+journals:
+  - Ecosystems
+  - Theoretical Ecology
+url: link\.springer\.com
+full_url:
+  selector: //meta[@name="citation_fulltext_html_url"]
+  attribute: content
+elements:
+  received:
+    full_url: TRUE
+    selector: //span[@class="History HistoryReceived"]/span[@class="HistoryDate"]
+    date_format: "%d %B %Y"
+  accepted:
+    full_url: TRUE
+    selector: //span[@class="History HistoryAccepted"]/span[@class="HistoryDate"]
+    date_format: "%d %B %Y"
+  online: 
+    selector: //meta[@name="citation_online_date"]
+    attribute: content
+    date_format: "%Y/%m/%d"
+  issue:
+    selector: //meta[@name="citation_publication_date"]
+    attribute: content
+    date_format: "%Y/%m/%d"

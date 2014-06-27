@@ -1,0 +1,65 @@
+journals:
+  - Ecology Letters
+  - Journal of Ecology
+url: onlinelibrary\.wiley\.com
+elements:
+  editor:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=editor[[:punct:]\s]{1,3})[[:alpha:][:punct:]]+\s[[:alpha:][:punct:]]+(?=[^\w])'
+  received:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=received[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  first_decision:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=first\sdecision\smade[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  second_decision:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=second\sdecision\smade[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  third_decision:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=third\sdecision\smade[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  fourth_decision:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=fourth\sdecision\smade[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  revised:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=manuscript\srevised[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  accepted:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=manuscript\saccepted[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  online:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=article\sfirst\spublished\sonline[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  issue:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=issue\spublished\sonline[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+      
+  
+    

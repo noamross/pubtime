@@ -1,0 +1,20 @@
+journals:
+  - The Condor
+url: www\.bioone\.org
+elements:
+  received:
+    selector:  //p[contains(@class, 'articleCitation')]
+    regex:  '(?<=received:\s{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    date_format: '%B %d, %Y'
+  accepted:
+    selector:  //p[contains(@class, 'articleCitation')]
+    regex:  '(?<=accepted:\s{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    date_format: '%B %d, %Y'
+  online: 
+    selector: //meta[@name="dc.Date" and @scheme="WTN8601"]
+    attribute: content
+  issue:
+    selector: //div[@id="breadcrumbs"]/span[@class="title"]/a
+    regex: '[[:upper:]][[:lower:]]{2}\s\d{4}'
+    date_format: '%b %Y'
+

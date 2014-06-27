@@ -1,0 +1,18 @@
+journals:
+  - 'Proceedings of the Royal Society B: Biological Sciences'
+  - Biology Letters
+url: \w+\.royalsocietypublishing\.org
+elements:
+  received:
+    selector: //li[@class="received"]
+    attribute: hwp:start
+  accepted:
+    selector: //li[@class="accepted"]
+    attribute: hwp:start
+  issue:
+    selector: //meta[@name="DC.Date"]
+    attribute: content
+  online:
+    selector: //div[@id="slugline"]
+    regex: \d{1,2}\s+[[:alpha:]]+\s+\d{4}
+    date_format: '%d %B %Y'
