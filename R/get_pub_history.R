@@ -85,6 +85,7 @@ scrape = function(pubhistory) {
                            stri_opts_regex(case_insensitive=TRUE)))
       match = match[!is.na(match)]
     }
+    if(length(match)==0) return(NA)
     if(is.null(element$date_format)) {
       val = match 
     } else {
@@ -94,12 +95,13 @@ scrape = function(pubhistory) {
           match = paste0("01-", match)
         }
         val = as.character(as.Date(match, format=dateform))
-        if(class(val) != "try-error") {
+        if((class(val) != "try-error") & !is.na(val)) {
           break
         }
       }
     }
     
+    if(length(val)==0) val = NA
     val = val[order(val)]
     
     return(val)

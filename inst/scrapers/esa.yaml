@@ -1,0 +1,42 @@
+journals:
+  - Ecology
+  - Ecological Applications
+  - Ecological Monographs
+  - Ecosphere
+url: www\.esajournals\.org
+elements:
+  editor:
+    selector:  //p[@class="first last"]
+    regex: '(?<=Editor[:\s]{1,3}).*$'
+  received:
+    selector:  //div[@id="articleContent"]//div[@class="history" or @class="NLM_author-notes"]//p[@class="fulltext" or @class="first last"]
+    regex: '(?<!final\sversion\sreceived[[:punct:]\s]{1,3})(?<=received[[:punct:]\s]{1,3})\w[^;.]+(?=$|[;.])'
+    date_format:
+      - '%d %B %Y'
+      - '%B %d, %Y'
+  revised:
+    selector:  //div[@id="articleContent"]//div[@class="history" or @class="NLM_author-notes"]//p[@class="fulltext" or @class="first last"]
+    regex: '(?<=revised[[:punct:]\s]{1,3})\w[^;.]+(?=$|[;.])'
+    date_format:
+      - '%d %B %Y'
+      - '%B %d, %Y'
+  accepted:
+    selector:  //div[@id="articleContent"]//div[@class="history" or @class="NLM_author-notes"]//p[@class="fulltext" or @class="first last"]
+    regex: '(?<=accepted[[:punct:]\s]{1,3})\w[^;.]+(?=$|[;.])'
+    date_format:
+      - '%d %B %Y'
+      - '%B %d, %Y'
+  final_version:
+    selector:  //div[@id="articleContent"]//div[@class="history" or @class="NLM_author-notes"]//p[@class="fulltext" or @class="first last"]
+    regex: '(?<=final\sversion\sreceived[[:punct:]\s]{1,3})\w[^;.]+(?=$|[;.])'
+    date_format:
+      - '%d %B %Y'
+      - '%B %d, %Y'
+  online:
+    selector:  //meta[@name="dc.Date"]
+    attribute: content
+  issue:
+    selector:  //div[@id="articleToolsHeading"]
+    regex:  '(?<=\()[^\)]+(?=\))'
+    date_format: '%B %Y'
+
