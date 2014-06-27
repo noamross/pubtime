@@ -7,7 +7,7 @@ scrapers = plyr::alply(scraper_files, 1, yaml::yaml.load_file)
 #' @importFrom rcrossref cr_cn
 #' @importFrom plyr ldply adply
 #' @export 
-get_pub_history = function(doi, verbose=TRUE) {
+get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE) {
   #check if doi is in local repo
   #check if doi is in main dataset
   #get info from crossref
@@ -20,10 +20,23 @@ get_pub_history = function(doi, verbose=TRUE) {
                                journal = xpathSApply(z, "//journal/journal_metadata/full_title", xmlValue),
                                url = xpathSApply(z, "//journal_article/doi_data/resource", xmlValue))
                         })
+  
+  if(sortdomains==TRUE) {
+    pubhistory_df$orig_order = 1:nrow(pubhistory_df)
+    pubhistory_df$domain = factor(stri_replace_first_regex(pubhistory_df$url, 
+                              "https?://[^\\.]*\\.([^/\\s]+)/?[^\\s]*", "$1"))
+    pubhistory_df = ddply(pubhistory_df, .(domain), transform, counter=1:length(domain))
+    pubhistory_df = pubhistory_df[order(pubhistory_df$counter, decreasing=TRUE),]
+    orig_order = pubhistory_df$orig_order
+    pubhistory_df$orig_order = NULL
+    pubhistory_df$domain = NULL
+    pubhistory_df$counter = NULL
+  }
 
   if(verbose) message("Scraping...")
   pubhistory_df = adply(pubhistory_df, 1, scrape, 
                         .progress=ifelse(verbose, 'time', 'none'))
+  if(sortdomains==TRUE) pubhistory_df = pubhistory_df[order(orig_order),]
   return(pubhistory_df)
 }
 
