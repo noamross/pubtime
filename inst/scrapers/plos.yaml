@@ -1,11 +1,18 @@
 journals:
-  - PLoS ONE
-  - PLoS Computational Biology
-  - PLoS Biology
-  - PLoS Medicine
-  - PLoS Pathogens
-  - PLoS Neglected Tropical Diseases
-  - PLoS Genetics
+  PLoS ONE:
+    test_dois: [10.1371/journal.pone.0041809, 10.1371/journal.pone.0023528]
+  PLoS Computational Biology:
+    test_dois: [10.1371/journal.pcbi.1000286, 10.1371/journal.pcbi.1002791]
+  PLoS Biology:
+    test_dois: [10.1371/journal.pbio.1001487, 10.1371/journal.pbio.0000037]
+  PLoS Medicine:
+    test_dois: [10.1371/journal.pmed.0050194, 10.1371/journal.pmed.1000303]
+  PLoS Pathogens:
+    test_dois: [10.1371/journal.ppat.1001068, 10.1371/journal.ppat.1002796]
+  PLoS Neglected Tropical Diseases:
+    test_dois: [10.1371/journal.pntd.0001658, 10.1371/journal.pntd.0000552]
+  PLoS Genetics:
+    test_dois: [10.1371/journal.pgen.0030047, 10.1371/journal.pgen.0030163]
 url: www\.plos[\w]+\.org
 elements:
   editor:

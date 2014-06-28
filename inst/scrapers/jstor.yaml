@@ -1,5 +1,6 @@
 journals:
-  - The American Naturalist
+  The American Naturalist:
+    test_dois: [10.1086/675716, 10.1086/648554]
 url: www\.jstor\.org
 elements:
   received:
@@ -23,4 +24,3 @@ elements:
     selector: //meta[@name="dc.Date" and @scheme="WTN8601"]
     attribute: content
     date_format: '%B %d, %Y'
-

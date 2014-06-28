@@ -1,5 +1,6 @@
 journals:
-  - PeerJ
+  PeerJ:
+    test_dois: ['10.7717/peerj.338', '10.7717/peerj.407']
 url: w*?\.?jstor\.com
 elements:
   editor:
@@ -10,4 +11,3 @@ elements:
     selector:  //time[@itemprop="dateModified"]
   online: 
     selector:  //time[@itemprop="datePublished"]
-

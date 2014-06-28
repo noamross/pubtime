@@ -1,5 +1,9 @@
 journals:
-  - The Condor
+  The Condor:
+    test_dois: [10.1525/cond.2013.110151, 10.1525/cond.2009.080086]
+    test_expect:
+    -  [received, accepted, online, issue]
+    -  [received, accepted, online, issue]
 url: www\.bioone\.org
 elements:
   received:

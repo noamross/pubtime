@@ -1,6 +1,8 @@
 journals:
-  - 'Proceedings of the Royal Society B: Biological Sciences'
-  - Biology Letters
+  'Proceedings of the Royal Society B: Biological Sciences':
+    test_dois: [10.1098/rspb.2013.2286, 10.1098/rspb.2012.0230]
+  Biology Letters:
+    test_dois: [10.1098/rsbl.2014.0206, 10.1098/rsbl.2011.1059]
 url: \w+\.royalsocietypublishing\.org
 elements:
   received:
@@ -14,5 +16,5 @@ elements:
     attribute: content
   online:
     selector: //div[@id="slugline"]
-    regex: \d{1,2}\s+[[:alpha:]]+\s+\d{4}
+    regex: '\d{1,2}\s+[[:alpha:]]+\s+\d{4}(?!\s+vol)'
     date_format: '%d %B %Y'

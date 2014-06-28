@@ -1,8 +1,12 @@
 journals:
-  - Ecology
-  - Ecological Applications
-  - Ecological Monographs
-  - Ecosphere
+  Ecology:
+    test_dois: [10.1890/12-0229.1, 10.1890/02-0266]
+  Ecological Applications:
+    test_dois: [10.1890/12-1881.1, 10.1890/04-1677]
+  Ecological Monographs:
+    test_dois: [10.1890/09-1541.1, 10.1890/02-0297]
+  Ecosphere:
+    test_dois: [10.1890/ES13-00269.1, 10.1890/ES10-00002.1]
 url: www\.esajournals\.org
 elements:
   editor:
@@ -39,4 +43,3 @@ elements:
     selector:  //div[@id="articleToolsHeading"]
     regex:  '(?<=\()[^\)]+(?=\))'
     date_format: '%B %Y'
-
