@@ -3,11 +3,15 @@ scraper_files = file.path(scraper_loc, list.files(scraper_loc,
                                                  pattern="[^.]\\.yaml"))
 scrapers = plyr::alply(scraper_files, 1, yaml::yaml.load_file)
 
+pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted", 
+"online", "final_version", "issue", "first_decision", "second_decision", 
+"third_decision", "fourth_decision", "preprint", "issueonline", 
+"revised1", "revised2", "revised3", "revised4")
 
 #' @importFrom rcrossref cr_cn
 #' @importFrom plyr ldply adply
 #' @export 
-get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE) {
+get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   #check if doi is in local repo
   #check if doi is in main dataset
   #get info from crossref
@@ -34,16 +38,46 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE) {
   }
 
   if(verbose) message("Scraping...")
-  pubhistory_df = adply(pubhistory_df, 1, scrape, 
-                        .progress=ifelse(verbose, 'time', 'none'))
-  if(sortdomains==TRUE) pubhistory_df = pubhistory_df[order(orig_order),]
-  return(pubhistory_df)
+  if(is.null(filename)) {
+    pubhistory_df = adply(pubhistory_df, 1, scrape, 
+                          .progress=ifelse(verbose, 'time', 'none'))
+    if(sortdomains==TRUE) pubhistory_df = pubhistory_df[order(orig_order),]
+    if(!is.null(pubhistory_df$editor)) {
+      pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
+    }
+    pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
+    pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor"))] = 
+      llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor"))], as.Date)
+    if(!is.null(pubhistory_df$revised) & !is.null(pubhistory_df$revised1)) {
+      pubhistory_df$revised1[is.na(pubhistory_df$revised1)] = pubhistory_df$revised[is.na(pubhistory_df$revised1)]
+      pubhistory_df$revised = NULL
+    } else if(!is.null(pubhistory_df$revised)) {
+      names(pubhistory_df)[names(pubhistory_df)=="revised"] = "revised1"
+    }  
+    rownames(pubhistory_df) = NULL
+    return(pubhistory_df)
+  } else {
+    cat(paste(pubtime_fields, collapse=","),"\n", sep="", file=filename)
+    a_ply(pubhistory_df, 1, function(z) {
+      pubhist = scrape(z)
+      if(!is.null(pubhist$revised)) {
+        names(pubhist)[names(pubhist)=="revised"] = "revised1"
+      }
+      if(!is.null(pubhist$editor)) {
+        pubhist$editor = clean_editor_names(pubhist$editor)
+      }
+      pubhist[,pubtime_fields[!(pubtime_fields %in% names(pubhist))]] = NA
+      pubhist = pubhist[pubtime_fields]
+      pubhist = llply(pubhist, as.character)
+      cat(paste(pubhist, collapse=","),"\n", sep="", file=filename, append=TRUE)
+    }, .progress=ifelse(verbose, 'time', 'none'))
+  }
 }
 
-#' @importFrom plyr laply
+#' @import plyr XML httr stringi
 scrape = function(pubhistory) {
   scraper_no = which(laply(scrapers, function(z) {
-                             pubhistory$journal %in% z$journals}))
+                             pubhistory$journal %in% names(z$journals)}))
   if(length(scraper_no) == 0) {
     scraper_no = which(laply(scrapers, function(z) {
                                stri_detect_regex(pubhistory$url, z$url) }))
@@ -76,8 +110,9 @@ scrape = function(pubhistory) {
       text = laply(node, xmlValue)
     } else {
       text = laply(node, xmlGetAttr, element$attribute)
-      names(text) = NULL
     }
+      names(text) = NULL
+
     if(is.null(element$regex)) {
       match = text
     } else {
@@ -95,7 +130,7 @@ scrape = function(pubhistory) {
           match = paste0("01-", match)
         }
         val = as.character(as.Date(match, format=dateform))
-        if((class(val) != "try-error") & !is.na(val)) {
+        if(all(class(val) != "try-error") & !is.na(val)) {
           break
         }
       }
@@ -103,7 +138,7 @@ scrape = function(pubhistory) {
     
     if(length(val)==0) val = NA
     val = val[order(val)]
-    
+
     return(val)
   })
   return(cbind(pubhistory, t(as.data.frame(unlist(vals)))))
