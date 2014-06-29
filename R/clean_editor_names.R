@@ -3,7 +3,7 @@
 #' Takes a vector of names, trims white spaceremoves accents and errant
 #' punctuation, separates initials with a space.
 #' 
-#' @importFrom magrittr %>%
+#' @import magrittr
 #' @importFrom stringi stri_replace_all_regex stri_trim_both
 #' @export
 clean_editor_names <- function(editors) {

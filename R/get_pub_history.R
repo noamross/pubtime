@@ -8,8 +8,8 @@ pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted",
 "third_decision", "fourth_decision", "preprint", "issueonline", 
 "revised1", "revised2", "revised3", "revised4")
 
-#' @importFrom rcrossref cr_cn
-#' @importFrom plyr ldply adply
+#' @import plyr rcrossref
+#' @importFrom stringi stri_replace_first_regex
 #' @export 
 get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   #check if doi is in local repo
@@ -74,7 +74,9 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   }
 }
 
-#' @import plyr XML httr stringi
+#' @import plyr XML httr 
+#' @importFrom stringi stri_detect_regex stri_match_all_regex stri_opts_regex
+#' stri_detect_fixed
 scrape = function(pubhistory) {
   scraper_no = which(laply(scrapers, function(z) {
                              pubhistory$journal %in% names(z$journals)}))
@@ -130,7 +132,7 @@ scrape = function(pubhistory) {
           match = paste0("01-", match)
         }
         val = as.character(as.Date(match, format=dateform))
-        if(all(class(val) != "try-error") & !is.na(val)) {
+        if((class(val)[1] != "try-error") & all(!is.na(val))) {
           break
         }
       }

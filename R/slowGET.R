@@ -14,8 +14,8 @@ throttle$recent = data.frame(domain =  character(), last_visit = character())
 #' @param url URL to getch
 #' @param ... other arguments to pass to \code{httr::GET}
 #' 
+#' @import httr
 #' @importFrom stringi stri_replace_first_regex
-#' @importFrom httr GET
 #' @export
 slowGET = function(url, pause=NULL, ...) {
   

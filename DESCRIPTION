@@ -18,6 +18,6 @@ Imports:
     lubridate,
     magrittr
 Suggests:
-    testthat
+    testthat,
 License: CC0 (code), CC-BY-NC (text and data)
 LazyData: true
