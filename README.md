@@ -34,6 +34,11 @@ need an authorization token which you can get
     install_github("ropensci/rcrossref")
     install_github("noamross/pubtime", auth_user=GITHUBUSERNAME, auth_token=YOURTOKEN)
     library(pubtime)
+    
+You also need to set PLoS API key to scrape PLoS articles.  Use mine for now by
+setting this environment variable prior to scraping:
+
+    options(PlosApiKey = "rkfDr76z75benY3pytM1")
 
 Description
 -----------
@@ -85,12 +90,24 @@ the `LICENSE` file.
 TODOs/ Development notes
 ------------------------
 
--   Expand to more journals. PLoS is next, but their API is down.
 -   Need to add some warning/error messages. Scraping may fail when articles are
     preprints, errata, etc.
 -   Documentation
--   Fix month/issue problems. This field is not reliable. (Or just kill it)
 -   Break up functions into files
--   Expand CONTRIBUTING
 -   Hidden function to update data with contributed set
 -   Function to update existing data sets
+
+----
+Additional tests to add:
+
+
+
+3.  Loaded properly, classes of the data frame are
+```
+c("character", "factor", "integer", "factor", "Date", "Date", 
+"Date", "Date", "Date", "Date", "Date", "Date", "Date", "integer", 
+"integer", "integer")
+```
+4. There are no entries with only NA in all the date columns
+
+
