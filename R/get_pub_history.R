@@ -14,6 +14,9 @@ pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted",
 #' publication history for supported journals and publishers.  For supported
 #' journals and publishers, see the YAML files in the \code{scrapers} directory.
 #' 
+#' The data frame has an \code{error} field which will be \code{TRUE} if there
+#' was a problem scraping the page. 
+#' 
 #' @param doi a DOI or vector of DOIs
 #' @param verbose show a progress bar?
 #' @param filename If TRUE, will write directly to a CSV file rather than returning
@@ -68,7 +71,11 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
     if(!is.null(pubhistory_df$editor)) {
       pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
     }
+    pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
+    pubhistory_df = pubhistory_df[pubtime_fields]
     pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
+    pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("doi", "url")], as.factor)
+    pubhistory_df$error = as.logical(pubhistory_df$error)
     pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))] = 
       llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))], as.Date)
     if(!is.null(pubhistory_df$revised) & !is.null(pubhistory_df$revised1)) {
@@ -77,8 +84,6 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
     } else if(!is.null(pubhistory_df$revised)) {
       names(pubhistory_df)[names(pubhistory_df)=="revised"] = "revised1"
     }  
-    pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
-    pubhistory_df = pubhistory_df[pubtime_fields]
     rownames(pubhistory_df) = NULL
     return(pubhistory_df)
   } else {
