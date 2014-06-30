@@ -50,6 +50,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   }
 
   pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
+
   if(verbose) message("Scraping...")
   if(is.null(filename)) {
     pubhistory_df = adply(pubhistory_df, 1, scrape, 
