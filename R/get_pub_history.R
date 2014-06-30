@@ -36,7 +36,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
                                journal = xpathSApply(z, "//journal/journal_metadata/full_title", xmlValue),
                                url = xpathSApply(z, "//journal_article/doi_data/resource", xmlValue))
                         })
-  
+
   if(sortdomains==TRUE) {
     pubhistory_df$orig_order = 1:nrow(pubhistory_df)
     pubhistory_df$domain = factor(stri_replace_first_regex(pubhistory_df$url, 
@@ -49,6 +49,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
     pubhistory_df$counter = NULL
   }
 
+  pubhistory[, c("doi", "url")] = llply(pubhistory[, c("doi", "url")], as.character)
   if(verbose) message("Scraping...")
   if(is.null(filename)) {
     pubhistory_df = adply(pubhistory_df, 1, scrape, 
