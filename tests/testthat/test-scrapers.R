@@ -19,13 +19,20 @@ if(class(basedata) == "try-error") {
   basedata = readRDS(system.file("inst", "testdata", "testarticles.rds", package="pubtime"))
 }
 
+test_that("basedate is loaded", {
+  expect_equal(class(basedata), "data.frame")
+  expect_equal(nrow(basedata), 40)
+  expect_equal(ncol(basedata), 17)
+})
 
 for(doi in dois) {
 
-  test_that(paste("get_pub_history works on", doi), {
+context(paste("Testing against", doi))
+  
+  test_that(paste("Fields match test set on", doi), {
     testval = get_pub_history(doi, verbose=FALSE)
     for(field in names(testval)) {
-      print(expect_equivalent(basedata[basedata$doi == testval$doi, field], testval[[field]]))
+      expect_equivalent(basedata[basedata$doi == testval$doi, field], testval[[field]])
     }
   })
 
