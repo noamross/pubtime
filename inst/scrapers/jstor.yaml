@@ -1,6 +1,6 @@
 journals:
   The American Naturalist:
-    test_dois: [10.1086/675716, 10.1086/648554]
+#    test_dois: [10.1086/675716, 10.1086/648554]
 url: www\.jstor\.org
 elements:
   received:
