@@ -6,7 +6,7 @@ scrapers = plyr::alply(scraper_files, 1, yaml::yaml.load_file)
 pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted", 
 "online", "final_version", "issue", "first_decision", "second_decision", 
 "third_decision", "fourth_decision", "preprint", "issueonline", 
-"revised1", "revised2", "revised3", "revised4")
+"revised1", "revised2", "revised3", "revised4", "error")
 
 #' Get publication history from a DOI
 #' 
@@ -53,27 +53,44 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
 
   if(verbose) message("Scraping...")
   if(is.null(filename)) {
-    pubhistory_df = adply(pubhistory_df, 1, scrape, 
-                          .progress=ifelse(verbose, 'time', 'none'))
+    pubhistory_df = adply(pubhistory_df, 1, function(pubhistory) {
+                           out = try(scrape(pubhistory))
+                           if(class(out)=="try-error") {
+                              out = pubhistory
+                              out$error = TRUE
+                            } else {
+                              out$error = FALSE
+                            }
+                           return(out)
+    }, .progress=ifelse(verbose, 'time', 'none'))
+    
     if(sortdomains==TRUE) pubhistory_df = pubhistory_df[order(orig_order),]
     if(!is.null(pubhistory_df$editor)) {
       pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
     }
     pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
-    pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor"))] = 
-      llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor"))], as.Date)
+    pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))] = 
+      llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))], as.Date)
     if(!is.null(pubhistory_df$revised) & !is.null(pubhistory_df$revised1)) {
       pubhistory_df$revised1[is.na(pubhistory_df$revised1)] = pubhistory_df$revised[is.na(pubhistory_df$revised1)]
       pubhistory_df$revised = NULL
     } else if(!is.null(pubhistory_df$revised)) {
       names(pubhistory_df)[names(pubhistory_df)=="revised"] = "revised1"
     }  
+    pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
+    pubhistory_df = pubhistory_df[pubtime_fields]
     rownames(pubhistory_df) = NULL
     return(pubhistory_df)
   } else {
     cat(paste(pubtime_fields, collapse=","),"\n", sep="", file=filename)
     a_ply(pubhistory_df, 1, function(z) {
-      pubhist = scrape(z)
+      pubhist = try(scrape(z))
+      if(class(out)=="try-error") {
+        pubhist = z
+        pubhist$error = TRUE
+      } else {
+        pubhist$error = FALSE
+      }
       if(!is.null(pubhist$revised)) {
         names(pubhist)[names(pubhist)=="revised"] = "revised1"
       }
