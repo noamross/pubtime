@@ -1,41 +1,27 @@
 \name{get_pub_history}
 \alias{get_pub_history}
-\title{Retreive the publication history of a journal article from its DOI}
+\title{Get publication history from a DOI}
 \usage{
-get_pub_history(doi, oa_only = FALSE)
+get_pub_history(doi, verbose = TRUE, sortdomains = TRUE, filename = NULL)
 }
 \arguments{
-  \item{doi}{The DOI of the journal article}
+  \item{doi}{a DOI or vector of DOIs}
 
-  \item{oa_only}{When TRUE, the function will not attempt
-  to retreat information from articles whose publication
-  histories are behind a paywall}
-}
-\value{
-A list with the DOI, journal, volume, editor and
-publication history dates of the article. Unavailable
-publication history dates will be NA. The possible
-categories of dates are:
+  \item{verbose}{show a progress bar?}
 
-\item{submitted}{The date the article was sent in}
-\item{decision}{The date an initial decision (e.g., major
-revisions), was reached on the article} \item{revised}{The
-date an updated version of the article was sent}
-\item{accepted}{The date the article was accepted for
-publication} \item{finalversion}{The date a finalized
-version was received, following an initial or final
-acceptance decision} \item{preprint}{The date a pre-typeset
-version of the article appeared online} \item{online}{The
-date the article appeared online} \item{issueonline}{The
-date the issue that the article is in appeared online}
-\item{issuedate}{The date the issue was published}
+  \item{filename}{If TRUE, will write directly to a CSV
+  file rather than returning a data frame.  If
+  \code{sortdomains==TRUE}, the records will be out of
+  order.}
 
-Most articles do not have all this information.  In
-general, one expects to have dates for submission,
-acceptance, and publication
+  \item{sortdomains}{if TRUE, sorts domains so as to not
+  hit the same domain repeatedly.  See \code{slowGET} to
+  see how to control throttling.}
 }
 \description{
-Retreive the publication history of a journal article from
-its DOI
+This function takes a DOI, or vector of DOIs, and returns a
+data frame with publication history for supported journals
+and publishers.  For supported journals and publishers, see
+the YAML files in the \code{scrapers} directory.
 }
 

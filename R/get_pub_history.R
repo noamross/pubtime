@@ -8,6 +8,18 @@ pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted",
 "third_decision", "fourth_decision", "preprint", "issueonline", 
 "revised1", "revised2", "revised3", "revised4")
 
+#' Get publication history from a DOI
+#' 
+#' This function takes a DOI, or vector of DOIs, and returns a data frame with
+#' publication history for supported journals and publishers.  For supported
+#' journals and publishers, see the YAML files in the \code{scrapers} directory.
+#' 
+#' @param doi a DOI or vector of DOIs
+#' @param verbose show a progress bar?
+#' @param filename If TRUE, will write directly to a CSV file rather than returning
+#' a data frame.  If \code{sortdomains==TRUE}, the records will be out of order.
+#' @param sortdomains if TRUE, sorts domains so as to not hit the same domain
+#' repeatedly.  See \code{slowGET} to see how to control throttling.
 #' @import plyr rcrossref
 #' @importFrom stringi stri_replace_first_regex
 #' @export 
