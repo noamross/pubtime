@@ -92,7 +92,6 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
 #' @importFrom stringi stri_detect_regex stri_match_all_regex stri_opts_regex
 #' stri_detect_fixed
 scrape = function(pubhistory) {
-  print(paste0(as.character(pubhistory$doi), ", ", as.character(pubhistory$journal)))
   scraper_no = which(laply(scrapers, function(z) {
                              pubhistory$journal %in% names(z$journals)}))
   if(length(scraper_no) == 0) {
