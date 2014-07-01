@@ -39,4 +39,3 @@ for(filename in names(pubtimes_list)) {
   
 }
 
-cat("\nTest complete!\n")
