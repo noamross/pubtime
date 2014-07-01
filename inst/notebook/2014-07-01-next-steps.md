@@ -44,7 +44,7 @@ somewhat specialized. *Oikos* doesn't provide publication history, though
 
 Anything from Wiley, JSTOR, Springer, or BioOne is pretty easy.  Elsevier/ScienceDirect
 is harder due to their website structure, though possible in the slightly
-longer term as (Quickscrape)[https://github.com/ContentMine/quickscrape] adopts
+longer term as [Quickscrape](https://github.com/ContentMine/quickscrape) adopts
 some features we need.
 
 I think we should scrape complete years 2004-2013, though for many journals the
