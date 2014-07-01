@@ -35,9 +35,18 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   if (!is.list(citation_xml)) citation_xml = list(citation_xml)
   
   pubhistory_df = ldply(citation_xml, function(z) {
-                    data.frame(doi = xpathSApply(z, "//journal_article/doi_data/doi", xmlValue),
+                         if(!("try-error" %in% class(z))) {
+                           pubhistory = data.frame(doi = xpathSApply(z, "//journal_article/doi_data/doi", xmlValue),
                                journal = xpathSApply(z, "//journal/journal_metadata/full_title", xmlValue),
                                url = xpathSApply(z, "//journal_article/doi_data/resource", xmlValue))
+                         } else {
+                           pubhistory = data.frame(doi=z$doi, journal=as.factor(NA), url=as.character(NA), error=TRUE)
+                         }
+                         if(nrow(pubhistory)==0 | any(is.na(pubhistory)) {
+                           pubhistory$doi = z$doi
+                           pubhistory$error = TRUE
+                         })
+                        }
                         })
 
   if(sortdomains==TRUE) {
