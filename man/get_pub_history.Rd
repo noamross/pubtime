@@ -24,4 +24,8 @@ data frame with publication history for supported journals
 and publishers.  For supported journals and publishers, see
 the YAML files in the \code{scrapers} directory.
 }
+\details{
+The data frame has an \code{error} field which will be
+\code{TRUE} if there was a problem scraping the page.
+}
 

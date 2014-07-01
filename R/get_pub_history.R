@@ -74,7 +74,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
     pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
     pubhistory_df = pubhistory_df[pubtime_fields]
     pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
-    pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("doi", "url")], as.factor)
+    pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("journal", "editor")], as.factor)
     pubhistory_df$error = as.logical(pubhistory_df$error)
     pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))] = 
       llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))], as.Date)
