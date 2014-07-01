@@ -19,10 +19,10 @@ if(class(basedata) == "try-error") {
   basedata = readRDS(system.file("inst", "testdata", "testarticles.rds", package="pubtime"))
 }
 
-test_that("basedate is loaded", {
+test_that("basedata is loaded", {
   expect_equal(class(basedata), "data.frame")
-  expect_equal(nrow(basedata), 40)
-  expect_equal(ncol(basedata), 17)
+  expect_equal(nrow(basedata), 34)
+  expect_equal(ncol(basedata), 20)
 })
 
 for(doi in dois) {
@@ -37,4 +37,6 @@ context(paste("Testing against", doi))
   })
 
 }
+
+
 
