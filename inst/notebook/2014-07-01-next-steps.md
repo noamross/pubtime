@@ -94,8 +94,15 @@ editors in each journal.
     - [An analysis of review times in statistical journals (PDF)](http://www.biometrics.tibs.org/carroll.pdf)
     - [Revise and resubmit rates at top philosophy journals](http://www.andrewcullison.com/2009/09/revise-and-resubmit-rates-at-top-philosophy-journals/); more [here](http://www.andrewcullison.com/2009/09/journal-review-time-comparisons/)
     - [A *very* old look at computer science journals](http://www.hutter1.net/journals.htm)
-    - [A chemistry journal's self-analysis of review times & acceptance rates (PDF)](http://www.lutz-bornmann.de/icons/TimePeerReview5.pdf)
     - [A blog post on medical journals, but without any actual data](http://sharmanedit.wordpress.com/2012/06/13/acceptance-to-publication-time/)
+
+- Journal articles concerning review times
+    - [How Long is the Peer Review Process for Journal Manuscripts? A Case Study on _Angewandte Chemie International Edition_ (PDF)](http://www.lutz-bornmann.de/icons/TimePeerReview5.pdf)
+    - [A Three-Decade History of the Duration of Peer Review](http://utpjournals.metapress.com/content/m652x27055h232l1/?genre=article&id=doi%3a10.3138%2fjsp.44.3.001)
+    - [The publishing delay in scholarly peer-reviewed journals](http://www.sciencedirect.com/science/article/pii/S1751157713000734)
+    - [Editorial responsiveness, journal quality, and total review time: An empirical analysis](http://onlinelibrary.wiley.com/doi/10.1002/asi.22624/abstract;jsessionid=A1440466E600A3BEC66A05A13A032C90.f03t01)
+    - [Behind the shroud: a survey of editors in ecology and evolution](http://www.esajournals.org/doi/abs/10.1890/090048)
+    - [Peer review time: how late is late in a small medical journal?](http://www.arcmedres.com/article/S0188-4409(03)00097-3/abstract)
 
 ## Other
 
