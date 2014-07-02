@@ -34,19 +34,19 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   citation_xml = cr_cn(doi, "crossref-xml")
   if (!is.list(citation_xml)) citation_xml = list(citation_xml)
   
-  pubhistory_df = ldply(citation_xml, function(z) {
-                         if(!("try-error" %in% class(z))) {
-                           pubhistory = data.frame(doi = xpathSApply(z, "//journal_article/doi_data/doi", xmlValue),
-                               journal = xpathSApply(z, "//journal/journal_metadata/full_title", xmlValue),
-                               url = xpathSApply(z, "//journal_article/doi_data/resource", xmlValue))
+  pubhistory_df = adply(1:length(citation_xml), 1, function(z) {
+                         if(!("error" %in% names(citation_xml[[z]]))) {
+                           pubhistory = try(data.frame(doi = xpathSApply(citation_xml[[z]], "//journal_article/doi_data/doi", xmlValue),
+                                          journal = xpathSApply(citation_xml[[z]], "//journal/journal_metadata/full_title", xmlValue),
+                                          url = xpathSApply(citation_xml[[z]], "//journal_article/doi_data/resource", xmlValue)),
+                                          silent=TRUE)
+                           if(("try-error" %in% class(pubhistory)) || (nrow(pubhistory)==0)) {
+                             pubhistory = data.frame(doi=doi[z], journal=as.factor(NA), url=as.character(NA), error=TRUE)
+                           } 
                          } else {
-                           pubhistory = data.frame(doi=z$doi, journal=as.factor(NA), url=as.character(NA), error=TRUE)
+                           pubhistory = data.frame(doi=doi[z], journal=as.factor(NA), url=as.character(NA), error=TRUE)
                          }
-                         if(nrow(pubhistory)==0 | any(is.na(pubhistory)) {
-                           pubhistory$doi = z$doi
-                           pubhistory$error = TRUE
-                         })
-                        }
+                         return(pubhistory)
                         })
 
   if(sortdomains==TRUE) {
