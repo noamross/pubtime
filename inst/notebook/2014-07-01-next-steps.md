@@ -42,6 +42,8 @@ We've chosen to focus on major journals in Ecology. What else do we want to cove
 somewhat specialized. *Oikos* doesn't provide publication history, though 
 *Oecologia* (Springer) does.
 
+- I think we should use some existing list (top _n_ journals ranked by impact factor / Eigenfactor?); *The Condor* is a pretty specialized journal, and it would be unfair to single it out with broader ecology journals. An analysis of ornithological journal (where there are >20) could be something down the road. -Alex
+
 Anything from Wiley, JSTOR, Springer, or BioOne is pretty easy.  Elsevier/ScienceDirect
 is harder due to their website structure, though possible in the slightly
 longer term as [Quickscrape](https://github.com/ContentMine/quickscrape) adopts
@@ -87,6 +89,13 @@ hazards model, treating time-to-accept or time-to-publish as a survival time.
 The `coxme` package allows such modeling with mixed effects, so we could
 specify editor as a random effect and see how much variance is explained by
 editors in each journal.
+
+- Some other resources:
+    - [An analysis of review times in statistical journals (PDF)](http://www.biometrics.tibs.org/carroll.pdf)
+    - [Revise and resubmit rates at top philosophy journals](http://www.andrewcullison.com/2009/09/revise-and-resubmit-rates-at-top-philosophy-journals/); more [here](http://www.andrewcullison.com/2009/09/journal-review-time-comparisons/)
+    - [A *very* old look at computer science journals](http://www.hutter1.net/journals.htm)
+    - [A chemistry journal's self-analysis of review times & acceptance rates (PDF)](http://www.lutz-bornmann.de/icons/TimePeerReview5.pdf)
+    - [A blog post on medical journals, but without any actual data](http://sharmanedit.wordpress.com/2012/06/13/acceptance-to-publication-time/)
 
 ## Other
 
