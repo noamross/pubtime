@@ -31,7 +31,7 @@ Ecology Letters | 1461-0248 | Wiley |
 Ecosphere | 2150-8925 | ESA |
 Ecosystems | 1435-0629 | Springer |
 Journal of Animal Ecology | 1365-2656 | BES/Wiley | Vol 71, Issue 4, July 2002 
-Journal of Applied Ecology | 1365-2664 | BES/Wiley |
+Journal of Applied Ecology | 1365-2664 | BES/Wiley | Vol 45, Issue 1, Feb 2008 
 Journal of Ecology  | 1365-2745 | BES/Wiley |
 Methods in Ecology and Evolution | 2041-210X | BES/Wiley |
 Oecologia | 1432-1939 | Springer
