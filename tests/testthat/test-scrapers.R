@@ -21,7 +21,7 @@ if(class(basedata) == "try-error") {
 
 test_that("basedata is loaded", {
   expect_equal(class(basedata), "data.frame")
-  expect_equal(nrow(basedata), 34)
+  expect_equal(nrow(basedata), 42)
   expect_equal(ncol(basedata), 20)
 })
 
