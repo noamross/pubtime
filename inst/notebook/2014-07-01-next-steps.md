@@ -20,29 +20,30 @@ scraping code, as well as the completed data set, will also be public.
 
 ## Journals
 
-We currently have tested the scraper on:
+Journal | ISSN | Publisher | First Year with Reported Publication History
+--------|------|-----------|---------------------------------------------
+American Naturalist | 1537-5323 | UChicago/JSTOR |
+Behavioral Ecology | 1465-7279 | Oxford
+Biology Letters | 1744-957X | Royal Soc |
+Ecological Applications | 1051-0761 | ESA |
+Ecological Monographs | 0012-9615 | ESA |
+Ecology Letters | 1461-0248 | Wiley |
+Ecosphere | 2150-8925 | ESA |
+Ecosystems | 1435-0629 | Springer |
+Journal of Animal Ecology | 1365-2656 | BES/Wiley |
+Journal of Applied Ecology | 1365-2664 | BES/Wiley |
+Journal of Ecology  | 1365-2745 | BES/Wiley |
+Methods in Ecology and Evolution | 2041-210X | BES/Wiley |
+Oecologia | 1432-1939 | Springer
+PeerJ (Ecology topic) | 2167-8359 | PeerJ |
+PLoS Journals (Ecology topic) | NA (all) | PLoS | All
+Proceedings of the Royal Society B: Biological Sciences | 1471-2954 | Royal Soc |
 
--   The Condor
--   Ecology
--   Ecological Applications
--   Ecological Monographs
--   Ecosphere
--   PeerJ (Ecology topic)
--   PLoS Journals (Ecology topic)
--   Proceedings of the Royal Society B: Biological Sciences
--   Biology Letters
--   Ecology Letters
--   Journal of Ecology
--   American Naturalist
--   Ecosystems
--   Theoretical Ecology
 
 We've chosen to focus on major journals in Ecology. What else do we want to cover 
 (and which shouldn't we bother with)? *The Condor* and *Theoretical Ecology* are
 somewhat specialized. *Oikos* doesn't provide publication history, though 
 *Oecologia* (Springer) does.
-
-- I think we should use some existing list (top _n_ journals ranked by impact factor / Eigenfactor?); *The Condor* is a pretty specialized journal, and it would be unfair to single it out with broader ecology journals. An analysis of ornithological journal (where there are >20) could be something down the road. -Alex
 
 Anything from Wiley, JSTOR, Springer, or BioOne is pretty easy.  Elsevier/ScienceDirect
 is harder due to their website structure, though possible in the slightly
