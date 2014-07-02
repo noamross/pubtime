@@ -30,7 +30,7 @@ Ecological Monographs | 0012-9615 | ESA |
 Ecology Letters | 1461-0248 | Wiley |
 Ecosphere | 2150-8925 | ESA |
 Ecosystems | 1435-0629 | Springer |
-Journal of Animal Ecology | 1365-2656 | BES/Wiley |
+Journal of Animal Ecology | 1365-2656 | BES/Wiley | Issue 4, July 2002 
 Journal of Applied Ecology | 1365-2664 | BES/Wiley |
 Journal of Ecology  | 1365-2745 | BES/Wiley |
 Methods in Ecology and Evolution | 2041-210X | BES/Wiley |
