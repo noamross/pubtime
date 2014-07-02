@@ -33,7 +33,7 @@ Ecosystems | 1435-0629 | Springer |
 Journal of Animal Ecology | 1365-2656 | BES/Wiley | Vol 71, Issue 4, July 2002 
 Journal of Applied Ecology | 1365-2664 | BES/Wiley | Vol 45, Issue 1, Feb 2008 
 Journal of Ecology  | 1365-2745 | BES/Wiley | Vol 90, Issue 1, Feb 2002
-Methods in Ecology and Evolution | 2041-210X | BES/Wiley |
+Methods in Ecology and Evolution | 2041-210X | BES/Wiley | All
 Oecologia | 1432-1939 | Springer
 PeerJ (Ecology topic) | 2167-8359 | PeerJ |
 PLoS Journals (Ecology topic) | NA (all) | PLoS | All
