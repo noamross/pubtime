@@ -1,0 +1,20 @@
+journals:
+   Behavioral Ecology:
+    test_dois: [10.1093/beheco/arg025, 10.1093/beheco/art063]
+url: \w+\.oxfordjournals\.org
+elements:
+  received:
+    selector: //li[@class="received"]
+    attribute: hwp:start
+  revised:
+    selector: //li[@class="rev-recd"]
+    attribute: hwp:start
+  accepted:
+    selector: //li[@class="accepted"]
+    attribute: hwp:start
+  issue:
+    selector: //meta[@name="DC.Date"]
+    attribute: content
+  online:
+    selector: //span[@class="slug-ahead-of-print-date"]
+    date_format: '%B %d, %Y'

@@ -3,6 +3,8 @@ journals:
 #    test_dois: [10.1007/s10021-002-0108-6, 10.1007/s10021-012-9541-3] 
   Theoretical Ecology:
 #    test_dois:  [10.1007/s12080-008-0023-3, 10.1007/s12080-013-0198-0]
+  Oecologia:
+#    test_dois:  [10.1007/s00442-004-1679-z, 10.1007/s00442-014-2955-1]
 url: link\.springer\.com
 full_url:
   selector: //meta[@name="citation_fulltext_html_url"]

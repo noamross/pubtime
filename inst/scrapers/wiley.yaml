@@ -3,14 +3,20 @@ journals:
     test_dois: [10.1111/ele.12233, 10.1046/j.1461-0248.2003.00475.x]
   Journal of Ecology:
     test_dois: [10.1111/1365-2745.12168, 10.1046/j.1365-2745.2002.00707.x]
-url: onlinelibrary\.wiley\.com
+  Journal of Animal Ecology:
+    test_dois: [10.1111/1365-2656.12200, 10.1111/j.0021-8790.2004.00821.x]
+  Journal of Applied Ecology:
+    test_dois: [10.1111/1365-2664.12125, 10.1111/j.1365-2664.2005.01101.x]
+  Methods in Ecology and Evolution:
+    test_dois: [10.1111/2041-210X.12144, 10.1111/j.2041-210X.2009.00007.x]
+url: \w+\.wiley\.com
 elements:
   editor:
     selector:  //div[@id="publicationHistoryDetails"]/ol
-    regex: '(?<=editor[[:punct:]\s]{1,3})[[:alpha:][:punct:]]+\s[[:alpha:][:punct:]]+(?=[^\w])'
+    regex: '(?<=editor[,:\s]{1,3})[[:alpha:]''.\-\s]+?(?=(?:manuscript|accepted|received|final|copy|first|second|third|fourth|revision|revised|issue|article)|;|$)'
   received:
     selector:  //div[@id="publicationHistoryDetails"]/ol
-    regex: '(?<=received[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    regex: '(?<!copy\sreceived[[:punct:]\s]{1,3})(?<=received[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
     date_format:
       - '%d %B %Y'
       - '%d %b %Y'
@@ -46,7 +52,13 @@ elements:
       - '%d %b %Y'
   accepted:
     selector:  //div[@id="publicationHistoryDetails"]/ol
-    regex: '(?<=(?:revision|manuscript)\saccepted[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    regex: '(?<=(?:revision\s|manuscript\s|\s)accepted[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
+    date_format:
+      - '%d %B %Y'
+      - '%d %b %Y'
+  final_version:
+    selector:  //div[@id="publicationHistoryDetails"]/ol
+    regex: '(?<=final\scopy\sreceived[[:punct:]\s]{1,3})\d{1,2}\s+[[:alpha:]]+\s+\d{4}'
     date_format:
       - '%d %B %Y'
       - '%d %b %Y'
