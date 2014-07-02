@@ -77,46 +77,20 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
     }, .progress=ifelse(verbose, 'time', 'none'))
     
     if(sortdomains==TRUE) pubhistory_df = pubhistory_df[order(orig_order),]
-    if(!is.null(pubhistory_df$editor)) {
-      pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
-    }
-    pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
-    if(!is.null(pubhistory_df$revised)) {
-      pubhistory_df = pubhistory_df[c(pubtime_fields, "revised")]
-    } else {
-      pubhistory_df = pubhistory_df[pubtime_fields]
-    }
-    pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
-    pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("journal", "editor")], as.factor)
-    pubhistory_df$error = as.logical(pubhistory_df$error)
-    pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))] = 
-      llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))], as.Date)
-    if(!is.null(pubhistory_df$revised) & !is.null(pubhistory_df$revised1)) {
-      pubhistory_df$revised1[is.na(pubhistory_df$revised1)] = pubhistory_df$revised[is.na(pubhistory_df$revised1)]
-      pubhistory_df$revised = NULL
-    } else if(!is.null(pubhistory_df$revised)) {
-      names(pubhistory_df)[names(pubhistory_df)=="revised"] = "revised1"
-    }  
-    rownames(pubhistory_df) = NULL
+
+    pubhistory_df = clean_pubhistory_df(pubhistory_df)
     return(pubhistory_df)
   } else {
     cat(paste(pubtime_fields, collapse=","),"\n", sep="", file=filename)
     a_ply(pubhistory_df, 1, function(z) {
       pubhist = try(scrape(z))
-      if(class(out)=="try-error") {
+      if(class(pubhist)=="try-error") {
         pubhist = z
         pubhist$error = TRUE
       } else {
         pubhist$error = FALSE
       }
-      if(!is.null(pubhist$revised)) {
-        names(pubhist)[names(pubhist)=="revised"] = "revised1"
-      }
-      if(!is.null(pubhist$editor)) {
-        pubhist$editor = clean_editor_names(pubhist$editor)
-      }
-      pubhist[,pubtime_fields[!(pubtime_fields %in% names(pubhist))]] = NA
-      pubhist = pubhist[pubtime_fields]
+      pubhist = clean_pubhistory_df(pubhist)
       pubhist = llply(pubhist, as.character)
       cat(paste(pubhist, collapse=","),"\n", sep="", file=filename, append=TRUE)
     }, .progress=ifelse(verbose, 'time', 'none'))
@@ -193,4 +167,29 @@ scrape = function(pubhistory) {
     return(val)
   })
   return(cbind(pubhistory, t(as.data.frame(unlist(vals)))))
+}
+
+clean_pubhistory_df = function(pubhistory_df) {
+    if(!is.null(pubhistory_df$editor)) {
+      pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
+    }
+    pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
+    if(!is.null(pubhistory_df$revised)) {
+      pubhistory_df = pubhistory_df[c(pubtime_fields, "revised")]
+    } else {
+      pubhistory_df = pubhistory_df[pubtime_fields]
+    }
+    pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
+    pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("journal", "editor")], as.factor)
+    pubhistory_df$error = as.logical(pubhistory_df$error)
+    pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))] = 
+      llply(pubhistory_df[,-which(names(pubhistory_df) %in% c("doi", "journal", "url", "editor", "error"))], as.Date)
+    if(!is.null(pubhistory_df$revised) & !is.null(pubhistory_df$revised1)) {
+      pubhistory_df$revised1[is.na(pubhistory_df$revised1)] = pubhistory_df$revised[is.na(pubhistory_df$revised1)]
+      pubhistory_df$revised = NULL
+    } else if(!is.null(pubhistory_df$revised)) {
+      names(pubhistory_df)[names(pubhistory_df)=="revised"] = "revised1"
+    }  
+    rownames(pubhistory_df) = NULL
+    return(pubhistory_df)
 }
