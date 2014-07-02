@@ -81,7 +81,11 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
       pubhistory_df$editor = clean_editor_names(pubhistory_df$editor)
     }
     pubhistory_df[,pubtime_fields[!(pubtime_fields %in% names(pubhistory_df))]] = NA
-    pubhistory_df = pubhistory_df[c(pubtime_fields, "revised")]
+    if(!is.null(pubhistory_df$revised)) {
+      pubhistory_df = pubhistory_df[c(pubtime_fields, "revised")]
+    } else {
+      pubhistory_df = pubhistory_df[pubtime_fields]
+    }
     pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
     pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("journal", "editor")], as.factor)
     pubhistory_df$error = as.logical(pubhistory_df$error)
