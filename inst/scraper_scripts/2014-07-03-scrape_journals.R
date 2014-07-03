@@ -21,7 +21,7 @@ main_dois = dois[-sample_vals]
 # TESTING: Run this prior to the main run to check everything is OK.
 # Estimated time: 20 mins
 # -----------------------
-get_pub_history(dois_sample, 
+get_pub_history(sample_dois, 
                 file=paste0(stri_match_first_regex(DOIS_FILE, "\\w+(?=.txt)"),
                             "_sample.csv"))
 # Save the session data
