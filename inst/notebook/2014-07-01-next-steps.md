@@ -37,7 +37,7 @@ Methods in Ecology and Evolution | 2041-210X | BES/Wiley | All
 Oecologia | 1432-1939 | Springer
 PeerJ (Ecology topic) | 2167-8359 | PeerJ | All
 PLoS Journals (Ecology topic) | NA (all) | PLoS | All
-Proceedings of the Royal Society B: Biological Sciences | 1471-2954 | Royal Soc |
+Proceedings of the Royal Society B: Biological Sciences | 1471-2954 | Royal Soc | Vol 272, no 1562, March-7-2005
 
 
 We've chosen to focus on major journals in Ecology. What else do we want to cover 
