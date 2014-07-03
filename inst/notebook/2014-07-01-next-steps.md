@@ -25,10 +25,10 @@ Journal | ISSN | Publisher | First Year with Reported Publication History
 American Naturalist | 1537-5323 | UChicago/JSTOR | since before 2000
 Behavioral Ecology | 1465-7279 | Oxford | since before 2000
 Biology Letters | 1744-957X | Royal Soc | All
-Ecological Applications | 1051-0761 | ESA |
-Ecological Monographs | 0012-9615 | ESA |
+Ecological Applications | 1051-0761 | ESA | since before 2000
+Ecological Monographs | 0012-9615 | ESA | since before 2000
 Ecology Letters | 1461-0248 | Wiley | Vol 5, Issue 3, May 2002
-Ecosphere | 2150-8925 | ESA |
+Ecosphere | 2150-8925 | ESA | All
 Ecosystems | 1435-0629 | Springer | All
 Journal of Animal Ecology | 1365-2656 | BES/Wiley | Vol 71, Issue 4, July 2002 
 Journal of Applied Ecology | 1365-2664 | BES/Wiley | Vol 45, Issue 1, Feb 2008 
