@@ -16,5 +16,26 @@ Journal of Ecology  | 1365-2745 | BES/Wiley | Vol 90, Issue 1, Feb 2002
 Methods in Ecology and Evolution | 2041-210X | BES/Wiley | All
 Oecologia | 1432-1939 | Springer | since before 2000
 PeerJ (Ecology topic) | 2167-8359 | PeerJ | All
-PLoS Journals (Ecology topic) | NA (all) | PLoS | All
+PLoS Journals (Ecology topic) | NA | | all | | PLoS | All
 Proceedings of the Royal Society B: Biological Sciences | 1471-2954 | Royal Soc | Vol 272, no 1562, March-7-2005
+Ecology & Evolution | | Wiley |
+African Journal of Ecology | | Wiley |
+Austral Ecology | | Wiley |
+Animal Conservation | | Wiley |
+Conservation Biology | | Wiley |
+Ecography | | Wiley |
+Ecological Entomology | | Wiley |
+Global Ecology and Biogeography | | Wiley |
+Global Change Biology | | Wiley |
+Insect Conservation and Diversity | | Wiley |
+Functional Ecology | | Wiley/BES |
+Molecular Ecology | | Wiley |
+Molecular Ecology Resources/Notes | | Wiley |
+Theoretical Ecology | | Springs
+Journal of Insect Conservation | | Springer |
+Aquatic Ecology | | Springer |
+Ecological Research | | Springer / Japanese society |
+Journal of Chemical Ecology | | Springer |
+Landscape Ecology | | Springer |
+Population Ecology | | Springer |
+Microbial Ecology | | Springer |
