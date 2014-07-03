@@ -23,7 +23,6 @@ scraping code, as well as the completed data set, will also be public.
 ***See the [journal list](https://github.com/noamross/pubtime/blob/master/inst/notebook/2014-07-02-journal-list.md)
 for current list of potential data sources.***
 
-
 We've chosen to focus on major journals in Ecology. What else do we want to cover 
 (and which shouldn't we bother with)? *The Condor* and *Theoretical Ecology* are
 somewhat specialized. *Oikos* doesn't provide publication history, though 
