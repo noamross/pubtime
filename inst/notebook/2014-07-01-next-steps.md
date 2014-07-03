@@ -24,7 +24,7 @@ Journal | ISSN | Publisher | First Year with Reported Publication History
 --------|------|-----------|---------------------------------------------
 American Naturalist | 1537-5323 | UChicago/JSTOR |
 Behavioral Ecology | 1465-7279 | Oxford
-Biology Letters | 1744-957X | Royal Soc |
+Biology Letters | 1744-957X | Royal Soc | All
 Ecological Applications | 1051-0761 | ESA |
 Ecological Monographs | 0012-9615 | ESA |
 Ecology Letters | 1461-0248 | Wiley | Vol 5, Issue 3, May 2002
