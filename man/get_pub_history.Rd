@@ -2,7 +2,8 @@
 \alias{get_pub_history}
 \title{Get publication history from a DOI}
 \usage{
-get_pub_history(doi, verbose = TRUE, sortdomains = TRUE, filename = NULL)
+get_pub_history(doi, verbose = TRUE, sortdomains = TRUE, filename = NULL,
+  silenterrors = TRUE)
 }
 \arguments{
   \item{doi}{a DOI or vector of DOIs}
