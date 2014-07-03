@@ -25,12 +25,15 @@ test_that("basedata is loaded", {
   expect_equal(ncol(basedata), 20)
 })
 
+context("Scraping test sites")
+testdata = get_pub_history(dois)
+
 for(doi in dois) {
 
-context(paste("Testing against", doi))
+context(paste("Testing against data from", doi))
   
   test_that(paste("Fields match test set on", doi), {
-    testval = get_pub_history(doi, verbose=FALSE)
+    testval = subset(testdata, doi==doi)
     for(field in names(testval)) {
       expect_equivalent(basedata[basedata$doi == testval$doi, field], testval[[field]])
     }
