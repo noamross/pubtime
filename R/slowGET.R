@@ -20,7 +20,7 @@ throttle$recent = data.frame(domain =  character(), last_visit = character())
 slowGET = function(url, pause=NULL, ...) {
   
   if(is.null(pause)) pause = getOption("SlowGetPause")
-  if(is.null(pause)) pause = 10
+  if(is.null(pause)) pause = 12
   
   domain = stri_replace_first_regex(url, "https?://[^\\.]*\\.([^/\\s]+)/?[^\\s]*", "$1")
   if(domain %in% throttle$recent$domain) {
