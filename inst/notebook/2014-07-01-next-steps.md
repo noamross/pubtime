@@ -27,7 +27,7 @@ Behavioral Ecology | 1465-7279 | Oxford
 Biology Letters | 1744-957X | Royal Soc |
 Ecological Applications | 1051-0761 | ESA |
 Ecological Monographs | 0012-9615 | ESA |
-Ecology Letters | 1461-0248 | Wiley |
+Ecology Letters | 1461-0248 | Wiley | Vol 5, Issue 3, May 2002
 Ecosphere | 2150-8925 | ESA |
 Ecosystems | 1435-0629 | Springer |
 Journal of Animal Ecology | 1365-2656 | BES/Wiley | Vol 71, Issue 4, July 2002 
