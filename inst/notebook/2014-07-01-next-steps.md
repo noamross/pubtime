@@ -22,7 +22,7 @@ scraping code, as well as the completed data set, will also be public.
 
 Journal | ISSN | Publisher | First Year with Reported Publication History
 --------|------|-----------|---------------------------------------------
-American Naturalist | 1537-5323 | UChicago/JSTOR |
+American Naturalist | 1537-5323 | UChicago/JSTOR | since before 2000
 Behavioral Ecology | 1465-7279 | Oxford | since before 2000
 Biology Letters | 1744-957X | Royal Soc | All
 Ecological Applications | 1051-0761 | ESA |
