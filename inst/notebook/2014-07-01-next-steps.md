@@ -29,7 +29,7 @@ Ecological Applications | 1051-0761 | ESA |
 Ecological Monographs | 0012-9615 | ESA |
 Ecology Letters | 1461-0248 | Wiley | Vol 5, Issue 3, May 2002
 Ecosphere | 2150-8925 | ESA |
-Ecosystems | 1435-0629 | Springer |
+Ecosystems | 1435-0629 | Springer | All
 Journal of Animal Ecology | 1365-2656 | BES/Wiley | Vol 71, Issue 4, July 2002 
 Journal of Applied Ecology | 1365-2664 | BES/Wiley | Vol 45, Issue 1, Feb 2008 
 Journal of Ecology  | 1365-2745 | BES/Wiley | Vol 90, Issue 1, Feb 2002
