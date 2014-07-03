@@ -1,4 +1,8 @@
 # Script for first major scrape, created July 3, 2014
+install.packages("devtools")
+require(devtools)
+install_github("ropensci/crossref")
+install_github("noamross/pubtime", auth_user="YOURUSERNAME", auth_token="YOURAUTHTOKEN")
 require(pubtime)
 require(stringi)
 
