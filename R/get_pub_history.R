@@ -26,7 +26,8 @@ pubtime_fields = c("doi", "journal", "url", "editor", "received", "accepted",
 #' @import plyr rcrossref
 #' @importFrom stringi stri_replace_first_regex
 #' @export 
-get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
+get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL,
+                           silenterrors=TRUE) {
   #check if doi is in local repo
   #check if doi is in main dataset
   #get info from crossref
@@ -39,7 +40,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
                            pubhistory = try(data.frame(doi = xpathSApply(citation_xml[[z]], "//journal_article/doi_data/doi", xmlValue),
                                           journal = xpathSApply(citation_xml[[z]], "//journal/journal_metadata/full_title", xmlValue),
                                           url = xpathSApply(citation_xml[[z]], "//journal_article/doi_data/resource", xmlValue)),
-                                          silent=TRUE)
+                                          silent=silenterrors)
                            if(("try-error" %in% class(pubhistory)) || (nrow(pubhistory)==0)) {
                              pubhistory = data.frame(doi=doi[z], journal=as.factor(NA), url=as.character(NA), error=TRUE)
                            } 
@@ -66,7 +67,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   if(verbose) message("Scraping...")
   if(is.null(filename)) {
     pubhistory_df = adply(pubhistory_df, 1, function(pubhistory) {
-                           out = try(scrape(pubhistory))
+                           out = try(scrape(pubhistory), silent=silenterrors)
                            if(class(out)=="try-error") {
                               out = pubhistory
                               out$error = TRUE
@@ -83,7 +84,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL) {
   } else {
     cat(paste(pubtime_fields, collapse=","),"\n", sep="", file=filename)
     a_ply(pubhistory_df, 1, function(z) {
-      pubhist = try(scrape(z))
+      pubhist = try(scrape(z), silent=silenterrors)
       if(class(pubhist)=="try-error") {
         pubhist = z
         pubhist$error = TRUE
