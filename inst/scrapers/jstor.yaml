@@ -13,7 +13,7 @@ elements:
     date_format: '%B %d, %Y'
   online: 
     selector:  //p[@class="articleBody_submissionDate"]/span[@class="string-date"]
-    regex:  '(?<=electronically\spublished[[:punct:]\s]{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
+    regex:  '(?<=electronically\s{1,30}published[[:punct:]\s]{0,3})[[:alpha:]]+\s+\d{1,2},\s+\d{4}'
     date_format: '%B %d, %Y'
   issue:
     selector: //div[@id="SCData"]
