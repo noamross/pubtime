@@ -9,7 +9,7 @@ before_install:
 
 install:
   - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package ropensci/rcrossref
+  - ./travis-tool.sh github_package noamross/rcrossref
 
 script: travis_wait ./travis-tool.sh run_tests
 

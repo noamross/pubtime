@@ -32,7 +32,7 @@ get_pub_history = function(doi, verbose=TRUE, sortdomains=TRUE, filename=NULL,
   #check if doi is in main dataset
   #get info from crossref
   if(verbose) message("Getting crossref metadata")
-  citation_xml = cr_cn(doi, "crossref-xml")
+  citation_xml = cr_cn(doi, "crossref-xml", .progress=ifelse(verbose, 'time', 'none'))
   if (!is.list(citation_xml)) citation_xml = list(citation_xml)
   
   pubhistory_df = adply(1:length(citation_xml), 1, function(z) {
