@@ -32,7 +32,7 @@ slowGET = function(url, pause=NULL, ...) {
       throttle$recent$last_visit[domain == throttle$recent$domain] = Sys.time()
   } else {
     throttle$recent = rbind(throttle$recent,
-                      data.frame(domains = domain, last_visit = Sys.time()))
+                      data.frame(domain = domain, last_visit = Sys.time()))
   }
 
   throttle$recent = throttle$recent[throttle$recent$last_visit > (Sys.time() - pause),]
