@@ -150,6 +150,7 @@ scrape = function(pubhistory) {
     if(is.null(element$date_format)) {
       val = match 
     } else {
+      match = stri_replace_all_regex(match, "\s", " ")
       for(dateform in element$date_format) {
         if(!stri_detect_fixed(dateform, "%d")) {
           dateform = paste0("%d-", dateform)
