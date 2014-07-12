@@ -11,10 +11,16 @@ require(rplos)
 require(stringi)
 require(plyr)
 
-plos_dat= searchplos(q=paste0("subject:Ecology"), fq='doc_type:full', 
-                     limit = 7000,
-                     fl=c("id", "journal", "volume", "editor", "received_date",
+require(rplos)
+require(plyr)
+dat=searchplos(q="subject:Ecology", fq='doc_type:full', limit = 7000, fl="editor")
+dat=ddply(plos_dat, "editor", nrow)
+head(dat[order(dat$V1, decreasing=TRUE),])
+
+plos_dat= searchplos(q="subject:Ecology", fq='doc_type:full', limit = 7000,
+                     fl=c("id", "journal", "editor", "received_date",
                           "accepted_date", "publication_date"))
+
 
 #Clean up Editor names
 plos_dat$editor = clean_editor_names(plos_dat$editor)
@@ -27,7 +33,6 @@ plos_dat[,3:5] = llply(plos_dat[,3:5], function(z) {
 
 plos_dat[c("journal", "editor")] = llply(plos_dat[c("journal", "editor")],
                                          as.factor)
-plos_dat$volume = as.integer(plos_dat$volume)
 
 # Some articles are missing journal names, but these can be extracted from the
 # DOIs
@@ -49,13 +54,13 @@ plos_dat[plos_dat$journal == "none",]$journal = abbrev_jlist
 
 
 #Change names, re-arrange columns, and put in empty fields
-names(plos_dat) = c("doi", "journal", "online", "submitted", "accepted",
-                    "editor", "volume")
+names(plos_dat) = c("doi", "journal", "online", "received", "accepted",
+                    "editor")
 
   
-plos_dat[names(datenames)[!(names(datenames) %in% names(plos_dat))]] = as.Date(NA)
+plos_dat[pubtime:::pubtime_fields[!(pubtime:::pubtime_fields %in% names(plos_dat))]] = as.Date(NA)
 
-plos_dat = plos_dat[,c("doi", "journal", "volume", names(datenames))]
+plos_dat = plos_dat[,pubtime:::pubtime_fields]
 
 write.csv(plos_dat, file.path("inst", "journal_data", "plos_pubtimes.csv"),
           row.names=FALSE)

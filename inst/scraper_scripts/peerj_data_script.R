@@ -2,6 +2,7 @@
 
 require(httr)
 require(plyr)
+require(pubtime)
 #PeerJ Ecology
  
 peerj_ecol_url = "https://peerj.com/articles/index.json?subject=1100"
@@ -16,8 +17,5 @@ repeat {
  
  peerj_dois = unlist(peerj_dois)
 
-scrape_dates(peerj_dois, pause=4, 
-             filename="inst/journal_data/peerj_pubtimes.csv",
-             split_journals=FALSE)
 
-
+get_pub_history(peerj_dois, file="peerj_data_nr_20140712_NR.csv")
