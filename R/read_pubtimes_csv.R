@@ -1,7 +1,7 @@
 #' @import plyr
 #' @export
 read_pubtimes_csv = function(file) {
-  pubhistory_df = read.csv(file, stringsAsFactors=FALSE)
+  pubhistory_df = read.csv(file, stringsAsFactors=FALSE, na.strings=c("NA", ""))
   pubhistory_df[, c("doi", "url")] = llply(pubhistory_df[, c("doi", "url")], as.character)
   pubhistory_df[, c("journal", "editor")] = llply(pubhistory_df[, c("journal", "editor")], as.factor)
   pubhistory_df$error = as.logical(pubhistory_df$error)
